@@ -19,8 +19,10 @@ import com.bytopia.abalone.mechanics.Player;
 import com.bytopia.abalone.mechanics.Side;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -45,7 +47,13 @@ public class GameActivity extends Activity {
 
 			String sp = intent.getExtras().getString("vs");
 			
-			Player secondPlayer = sp.equals("cpu")?(new AiDeborah()):bw;
+			Player secondPlayer;
+			//SharedPreferences pref = this.getApplicationContext().getSharedPreferences(name, mode)
+			if(sp.equals("cpu")){
+				secondPlayer=new AiDeborah();
+			}else{
+				secondPlayer=bw;
+			}
 			game = new Game(new ClassicLayout(), Side.BLACK, bw,
 					secondPlayer, bw, sp.equals("cpu") ? Game.CPU : Game.HUMAN);
 			startGame();

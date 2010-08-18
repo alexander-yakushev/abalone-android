@@ -30,5 +30,6 @@
 		space (i.e. not blocked by a marble of either colour).\nThe winner is
 		the first player to gain six opposing marbles from the opponent.
 	</string>
+	<string name="preferences">Preferences</string>
 
 </resources>

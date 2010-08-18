@@ -84,6 +84,10 @@ public class MainMenuActivity extends Activity {
 			dialog.setTitle(getString(R.string.rules_title));
 			dialog.show();
 			break;
+		case R.id.preferences_menu:
+			Intent preferencesIntent = new Intent("com.bytopia.abalone.PREFERENCES");
+			startActivity(preferencesIntent);
+			break;
 		}
 
 		return true;

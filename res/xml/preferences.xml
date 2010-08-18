@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <PreferenceCategory
+  	android:title="@string/preferences">
+  	
+  	<ListPreference
+                android:key="cpu_type"
+                android:title="@string/hello"
+                android:entries="@array/bot_names"
+                android:entryValues="@array/bot_names"
+                android:dialogTitle="@string/hello" />
+  		
+  	
+  </PreferenceCategory>
+  
+</PreferenceScreen>

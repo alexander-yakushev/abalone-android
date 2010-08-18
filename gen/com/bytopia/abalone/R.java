@@ -8,11 +8,15 @@
 package com.bytopia.abalone;
 
 public final class R {
+    public static final class array {
+        public static final int bot_names=0x7f050000;
+        public static final int bot_values=0x7f050001;
+    }
     public static final class attr {
     }
     public static final class color {
-        public static final int board=0x7f040001;
-        public static final int defaultColor=0x7f040000;
+        public static final int board=0x7f060001;
+        public static final int defaultColor=0x7f060000;
     }
     public static final class drawable {
         public static final int black_ball=0x7f020000;
@@ -23,13 +27,14 @@ public final class R {
         public static final int white_ball=0x7f020005;
     }
     public static final class id {
-        public static final int boardView=0x7f070000;
-        public static final int bottom_balls=0x7f070002;
-        public static final int n_game_cpu=0x7f070004;
-        public static final int n_game_human=0x7f070003;
-        public static final int resume_game=0x7f070005;
-        public static final int rules_menu=0x7f070006;
-        public static final int top_balls=0x7f070001;
+        public static final int boardView=0x7f090000;
+        public static final int bottom_balls=0x7f090002;
+        public static final int n_game_cpu=0x7f090004;
+        public static final int n_game_human=0x7f090003;
+        public static final int preferences_menu=0x7f090007;
+        public static final int resume_game=0x7f090005;
+        public static final int rules_menu=0x7f090006;
+        public static final int top_balls=0x7f090001;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -38,22 +43,26 @@ public final class R {
         public static final int splash=0x7f030003;
     }
     public static final class menu {
-        public static final int menu=0x7f060000;
+        public static final int menu=0x7f080000;
     }
     public static final class string {
-        public static final int app_name=0x7f050001;
-        public static final int black=0x7f050008;
-        public static final int game_over=0x7f05000b;
-        public static final int hello=0x7f050000;
-        public static final int new_game=0x7f050002;
-        public static final int new_game_vs_cpu=0x7f050007;
-        public static final int new_game_vs_human=0x7f050006;
-        public static final int resume_game=0x7f050003;
-        public static final int rules=0x7f05000d;
-        public static final int rules_title=0x7f05000c;
-        public static final int vs_cpu=0x7f050004;
-        public static final int vs_human=0x7f050005;
-        public static final int white=0x7f050009;
-        public static final int wins=0x7f05000a;
+        public static final int app_name=0x7f070001;
+        public static final int black=0x7f070008;
+        public static final int game_over=0x7f07000b;
+        public static final int hello=0x7f070000;
+        public static final int new_game=0x7f070002;
+        public static final int new_game_vs_cpu=0x7f070007;
+        public static final int new_game_vs_human=0x7f070006;
+        public static final int preferences=0x7f07000e;
+        public static final int resume_game=0x7f070003;
+        public static final int rules=0x7f07000d;
+        public static final int rules_title=0x7f07000c;
+        public static final int vs_cpu=0x7f070004;
+        public static final int vs_human=0x7f070005;
+        public static final int white=0x7f070009;
+        public static final int wins=0x7f07000a;
+    }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
     }
 }

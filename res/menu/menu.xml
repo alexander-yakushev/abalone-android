@@ -3,4 +3,5 @@
 	android:name="qwe">
 	
 <item android:id="@+id/rules_menu" android:title="@string/rules_title"></item>
+<item android:id="@+id/preferences_menu" android:title="@string/preferences"></item>
 </menu>
