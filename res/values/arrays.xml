@@ -17,15 +17,17 @@
 <resources>
 
     <string-array name="bot_names">
-        <item>alpha</item>
-        <item>beta</item>
-        <item>charlie</item>  
+        <item>ann</item>
+        <item>beatrice</item>
+        <item>charlotte</item>
+        <item>diana</item>  
     </string-array>
     
     <string-array name="bot_values">
         <item>ann</item>
         <item>beatrice</item>
-        <item>charlotte</item>  
+        <item>charlotte</item> 
+        <item>diana</item> 
     </string-array>
     
 </resources>

@@ -48,6 +48,7 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f070001;
         public static final int black=0x7f070008;
+        public static final int cpu_type=0x7f07000f;
         public static final int game_over=0x7f07000b;
         public static final int hello=0x7f070000;
         public static final int new_game=0x7f070002;

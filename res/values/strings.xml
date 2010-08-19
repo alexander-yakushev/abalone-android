@@ -31,5 +31,6 @@
 		the first player to gain six opposing marbles from the opponent.
 	</string>
 	<string name="preferences">Preferences</string>
+	<string name="cpu_type">CPU Type</string>
 
 </resources>

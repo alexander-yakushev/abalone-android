@@ -7,10 +7,10 @@
   	
   	<ListPreference
                 android:key="cpu_type"
-                android:title="@string/hello"
+                android:title="@string/cpu_type"
                 android:entries="@array/bot_names"
-                android:entryValues="@array/bot_names"
-                android:dialogTitle="@string/hello" />
+                android:entryValues="@array/bot_values"
+                android:dialogTitle="@string/cpu_type" />
   		
   	
   </PreferenceCategory>

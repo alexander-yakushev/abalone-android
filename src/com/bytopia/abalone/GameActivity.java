@@ -23,7 +23,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,16 +48,37 @@ public class GameActivity extends Activity {
 		if (intent.getAction().equals("com.bytopia.abalone.GAME")) {
 
 			String sp = intent.getExtras().getString("vs");
-			
+
 			Player secondPlayer;
-			//SharedPreferences pref = this.getApplicationContext().getSharedPreferences(name, mode)
-			if(sp.equals("cpu")){
-				secondPlayer=new AiDeborah();
-			}else{
-				secondPlayer=bw;
+			// SharedPreferences pref =
+			// this.getApplicationContext().getSharedPreferences(name, mode)
+			if (sp.equals("cpu")) {
+
+				SharedPreferences pref = PreferenceManager
+						.getDefaultSharedPreferences(getApplicationContext());
+				String cpuType = pref.getString("cpu_type", "ann");
+				Log.d("state", cpuType);
+
+				Resources resources = getResources();
+				String[] cpuValues = resources
+						.getStringArray(R.array.bot_values);
+				if (cpuType.equals(cpuValues[0])) {
+					secondPlayer = new AiAnn();
+				} else if (cpuType.equals(cpuValues[1])) {
+					secondPlayer = new AiBeatrice();
+				} else if (cpuType.equals(cpuValues[2])) {
+					secondPlayer = new AiCharlotte();
+				} else if (cpuType.equals(cpuValues[3])) {
+					secondPlayer = new AiDeborah();
+				} else {
+					Log.d("cpu","CpuTypeNotFound "+cpuType);
+					secondPlayer = new AiAnn();
+				}
+			} else {
+				secondPlayer = bw;
 			}
-			game = new Game(new ClassicLayout(), Side.BLACK, bw,
-					secondPlayer, bw, sp.equals("cpu") ? Game.CPU : Game.HUMAN);
+			game = new Game(new ClassicLayout(), Side.BLACK, bw, secondPlayer,
+					bw, sp.equals("cpu") ? Game.CPU : Game.HUMAN);
 			startGame();
 		} else if (intent.getAction().equals("com.bytopia.abalone.RESUMEGAME")) {
 			Log.d("state", "resumeing");
@@ -65,23 +88,23 @@ public class GameActivity extends Activity {
 				Board board = (Board) ois.readObject();
 				byte side = ois.readByte();
 				byte vsType = ois.readByte();
-				Player secondPlayer = (vsType == Game.HUMAN) ? bw : (new AiAnn());
-				game = new Game(board, side, bw, secondPlayer, bw,vsType);
+				Player secondPlayer = (vsType == Game.HUMAN) ? bw
+						: (new AiAnn());
+				game = new Game(board, side, bw, secondPlayer, bw, vsType);
 				byte n = ois.readByte();
-				//bw.ballSizeRecalc();
+				// bw.ballSizeRecalc();
 				game.getBoard().setBlackCaptured(n);
-				
-				for(int i =1;i<=n;i++){
+
+				for (int i = 1; i <= n; i++) {
 					ballCaptured(Side.BLACK);
 				}
 				n = ois.readByte();
 				game.getBoard().setWhiteCaptured(n);
-				for(int i =1;i<=n;i++){
+				for (int i = 1; i <= n; i++) {
 					ballCaptured(Side.WHITE);
 				}
-				
+
 				startGame();
-				
 
 			} catch (Exception e) {
 				Log.d("state", "Error");
@@ -138,7 +161,7 @@ public class GameActivity extends Activity {
 	public void ballCaptured(final byte side) {
 		Runnable runnable = new Runnable() {
 
-			private static final int DEFBALLSIZE=34;
+			private static final int DEFBALLSIZE = 34;
 
 			@Override
 			public void run() {
