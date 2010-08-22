@@ -56,10 +56,15 @@ public class GameActivity extends Activity {
 
 				SharedPreferences pref = PreferenceManager
 						.getDefaultSharedPreferences(getApplicationContext());
-				String cpuType = pref.getString("cpu_type", "ann");
-				Log.d("state", cpuType);
+				String cpuType;
 
 				Resources resources = getResources();
+				cpuType = intent.getExtras().getString("cpu_type");
+				if (cpuType == null) {
+					cpuType = pref.getString("cpu_type", "ann");
+				}
+				Log.d("state", cpuType);
+
 				String[] cpuValues = resources
 						.getStringArray(R.array.bot_values);
 				if (cpuType.equals(cpuValues[0])) {
@@ -71,7 +76,7 @@ public class GameActivity extends Activity {
 				} else if (cpuType.equals(cpuValues[3])) {
 					secondPlayer = new AiDeborah();
 				} else {
-					Log.d("cpu","CpuTypeNotFound "+cpuType);
+					Log.d("cpu", "CpuTypeNotFound " + cpuType);
 					secondPlayer = new AiAnn();
 				}
 			} else {

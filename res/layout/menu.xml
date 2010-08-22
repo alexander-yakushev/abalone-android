@@ -4,16 +4,43 @@
 	android:layout_height="fill_parent"
 	android:gravity="top">
 	
-	<Button 
-		android:layout_width="fill_parent"
+	<LinearLayout 
 		android:layout_height="wrap_content"
-		android:text="@string/new_game_vs_human"
-		android:id="@+id/n_game_human"/>
-	<Button 
 		android:layout_width="fill_parent"
+		android:orientation="horizontal">
+		
+		<Button 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/new_game_vs_human"
+			android:id="@+id/n_game_human"
+			android:layout_weight="1"/>
+		<Button
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="S"
+			android:layout_weight="6"
+			android:id="@+id/n_game_human_s"/>
+	</LinearLayout>
+	<LinearLayout 
 		android:layout_height="wrap_content"
-		android:text="@string/new_game_vs_cpu"
-		android:id="@+id/n_game_cpu"/>
+		android:layout_width="fill_parent"
+		android:orientation="horizontal">
+		
+		<Button 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/new_game_vs_cpu"
+			android:layout_weight="1"
+			android:id="@+id/n_game_cpu"/>
+		<Button
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="S"
+			android:layout_weight="6"
+			android:id="@+id/n_game_cpu_s"/>
+	</LinearLayout>
+	
 	<Button 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"

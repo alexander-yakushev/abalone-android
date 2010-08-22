@@ -3,9 +3,13 @@ package com.bytopia.abalone;
 import com.bytopia.abalone.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,10 +18,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainMenuActivity extends Activity {
+
+	Activity mainMenuActivity;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		mainMenuActivity = this;
 
 		setContentView(R.layout.menu);
 		Button newGameButtonHuman = (Button) findViewById(R.id.n_game_human);
@@ -45,6 +53,42 @@ public class MainMenuActivity extends Activity {
 				intent.putExtra("vs", "cpu");
 				intent.putExtra("type", "new");
 				startActivity(intent);
+
+			}
+		});
+
+		Button newGameButtonCpuSpecial = (Button) findViewById(R.id.n_game_cpu_s);
+		newGameButtonCpuSpecial.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				new AlertDialog.Builder(MainMenuActivity.this)
+						.setTitle(getResources().getString(R.string.cpu_type))
+						.setItems(R.array.bot_names,
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+										Intent intent = new Intent(
+												"com.bytopia.abalone.GAME");
+										intent.putExtra("side",
+												"BLACK");
+										intent.putExtra("vs", "cpu");
+										intent.putExtra("type", "new");
+//										intent.putExtra(
+//												"cpu_type",
+//												getResources().getStringArray(
+//														R.array.bot_values)[which]);
+										String[] values = getResources().getStringArray(R.array.bot_values);
+										String choise = values[which];
+										intent.putExtra("cpu_type", choise);
+										startActivity(intent);
+
+									}
+								}).create().show();
 
 			}
 		});
@@ -85,7 +129,8 @@ public class MainMenuActivity extends Activity {
 			dialog.show();
 			break;
 		case R.id.preferences_menu:
-			Intent preferencesIntent = new Intent("com.bytopia.abalone.PREFERENCES");
+			Intent preferencesIntent = new Intent(
+					"com.bytopia.abalone.PREFERENCES");
 			startActivity(preferencesIntent);
 			break;
 		}

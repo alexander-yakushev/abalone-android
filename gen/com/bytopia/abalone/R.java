@@ -29,11 +29,13 @@ public final class R {
     public static final class id {
         public static final int boardView=0x7f090000;
         public static final int bottom_balls=0x7f090002;
-        public static final int n_game_cpu=0x7f090004;
+        public static final int n_game_cpu=0x7f090005;
+        public static final int n_game_cpu_s=0x7f090006;
         public static final int n_game_human=0x7f090003;
-        public static final int preferences_menu=0x7f090007;
-        public static final int resume_game=0x7f090005;
-        public static final int rules_menu=0x7f090006;
+        public static final int n_game_human_s=0x7f090004;
+        public static final int preferences_menu=0x7f090009;
+        public static final int resume_game=0x7f090007;
+        public static final int rules_menu=0x7f090008;
         public static final int top_balls=0x7f090001;
     }
     public static final class layout {
