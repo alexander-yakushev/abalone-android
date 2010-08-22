@@ -11,6 +11,10 @@
                 android:entries="@array/bot_names"
                 android:entryValues="@array/bot_values"
                 android:dialogTitle="@string/cpu_type" />
+    <PreferenceScreen
+   		android:title="@string/game_layout">
+   		<intent android:action="com.bytopia.abalone.SELECT_LAYOUT"/>
+   	</PreferenceScreen>
   		
   	
   </PreferenceCategory>

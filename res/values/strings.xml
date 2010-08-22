@@ -32,5 +32,8 @@
 	</string>
 	<string name="preferences">Preferences</string>
 	<string name="cpu_type">CPU Type</string>
+	<string name="game_layout">Game Layout</string>
+	<string name="next">Next</string>
+	<string name="prev">Prev</string>
 
 </resources>

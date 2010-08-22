@@ -59,7 +59,7 @@ public class GameActivity extends Activity {
 
 				cpuType = intent.getExtras().getString("cpu_type");
 				if (cpuType == null) {
-					cpuType = pref.getString("cpu_type", "ann");
+					cpuType = pref.getString("cpu_type", "AiAnn");
 				}
 				Log.d("state", cpuType);
 				secondPlayer = getAi(cpuType);

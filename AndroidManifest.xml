@@ -31,6 +31,13 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+		
+		<activity android:name="SelectLayoutActivity">
+			<intent-filter>
+				<action android:name="com.bytopia.abalone.SELECT_LAYOUT" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
 	</application>
 	<uses-sdk android:minSdkVersion="3" />
 

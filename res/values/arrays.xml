@@ -24,10 +24,14 @@
     </string-array>
     
     <string-array name="bot_values">
-        <item>ann</item>
-        <item>beatrice</item>
-        <item>charlotte</item> 
-        <item>diana</item> 
+        <item>AiAnn</item>
+        <item>AiBeatrice</item>
+        <item>AiCharlotte</item> 
+        <item>AiDeborah</item> 
+    </string-array>
+    
+    <string-array name="game_layouts">
+    	<item>ClassicLayout</item>
     </string-array>
     
 </resources>
