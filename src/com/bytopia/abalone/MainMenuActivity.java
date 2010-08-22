@@ -1,15 +1,11 @@
 package com.bytopia.abalone;
 
-import com.bytopia.abalone.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -74,15 +70,12 @@ public class MainMenuActivity extends Activity {
 
 										Intent intent = new Intent(
 												"com.bytopia.abalone.GAME");
-										intent.putExtra("side",
-												"BLACK");
+										intent.putExtra("side", "BLACK");
 										intent.putExtra("vs", "cpu");
 										intent.putExtra("type", "new");
-//										intent.putExtra(
-//												"cpu_type",
-//												getResources().getStringArray(
-//														R.array.bot_values)[which]);
-										String[] values = getResources().getStringArray(R.array.bot_values);
+										String[] values = getResources()
+												.getStringArray(
+														R.array.bot_values);
 										String choise = values[which];
 										intent.putExtra("cpu_type", choise);
 										startActivity(intent);

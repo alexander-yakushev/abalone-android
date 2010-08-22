@@ -4,19 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.bytopia.abalone.R;
-import com.bytopia.abalone.mechanics.Board;
-import com.bytopia.abalone.mechanics.Cell;
-import com.bytopia.abalone.mechanics.Direction;
-import com.bytopia.abalone.mechanics.Game;
-import com.bytopia.abalone.mechanics.Group;
-import com.bytopia.abalone.mechanics.Layout;
-import com.bytopia.abalone.mechanics.Move;
-import com.bytopia.abalone.mechanics.MoveType;
-import com.bytopia.abalone.mechanics.Player;
-import com.bytopia.abalone.mechanics.Side;
-import com.bytopia.abalone.mechanics.Watcher;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -32,6 +19,18 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.bytopia.abalone.mechanics.Board;
+import com.bytopia.abalone.mechanics.Cell;
+import com.bytopia.abalone.mechanics.Direction;
+import com.bytopia.abalone.mechanics.Game;
+import com.bytopia.abalone.mechanics.Group;
+import com.bytopia.abalone.mechanics.Layout;
+import com.bytopia.abalone.mechanics.Move;
+import com.bytopia.abalone.mechanics.MoveType;
+import com.bytopia.abalone.mechanics.Player;
+import com.bytopia.abalone.mechanics.Side;
+import com.bytopia.abalone.mechanics.Watcher;
 
 public class BoardView extends View implements Player, Watcher {
 
@@ -350,8 +349,8 @@ public class BoardView extends View implements Player, Watcher {
 									getCell(e.getX(), e.getY()),
 									getDirectionFromCell(e.getX(), e.getY(),
 											startCell), game.getSide());
-					Log.d("input", getCell(e.getX(), e.getY()).toString() + " curG "
-							+ currentGroup);
+					Log.d("input", getCell(e.getX(), e.getY()).toString()
+							+ " curG " + currentGroup);
 				} else if (e.getAction() == MotionEvent.ACTION_UP
 						&& selectionStarted) {
 					selectedGroup = board

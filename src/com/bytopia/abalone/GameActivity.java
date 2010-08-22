@@ -7,19 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import com.bytopia.abalone.R;
-import com.bytopia.abalone.mechanics.AiAnn;
-import com.bytopia.abalone.mechanics.AiBeatrice;
-import com.bytopia.abalone.mechanics.AiCharlotte;
-import com.bytopia.abalone.mechanics.AiDeborah;
-import com.bytopia.abalone.mechanics.Board;
-import com.bytopia.abalone.mechanics.ClassicLayout;
-import com.bytopia.abalone.mechanics.Game;
-import com.bytopia.abalone.mechanics.Player;
-import com.bytopia.abalone.mechanics.Side;
-
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,12 +16,24 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
+
+import com.bytopia.abalone.mechanics.AiAnn;
+import com.bytopia.abalone.mechanics.AiBeatrice;
+import com.bytopia.abalone.mechanics.AiCharlotte;
+import com.bytopia.abalone.mechanics.AiDeborah;
+import com.bytopia.abalone.mechanics.ArtificialIntilligence;
+import com.bytopia.abalone.mechanics.Board;
+import com.bytopia.abalone.mechanics.ClassicLayout;
+import com.bytopia.abalone.mechanics.Game;
+import com.bytopia.abalone.mechanics.Player;
+import com.bytopia.abalone.mechanics.Side;
 
 public class GameActivity extends Activity {
 	private BoardView bw;
 	private Game game;
+	private String cpuType;
 	private static final String FILE_NAME = "gamedump.bin";
 
 	@Override
@@ -56,29 +56,14 @@ public class GameActivity extends Activity {
 
 				SharedPreferences pref = PreferenceManager
 						.getDefaultSharedPreferences(getApplicationContext());
-				String cpuType;
 
-				Resources resources = getResources();
 				cpuType = intent.getExtras().getString("cpu_type");
 				if (cpuType == null) {
 					cpuType = pref.getString("cpu_type", "ann");
 				}
 				Log.d("state", cpuType);
+				secondPlayer = getAi(cpuType);
 
-				String[] cpuValues = resources
-						.getStringArray(R.array.bot_values);
-				if (cpuType.equals(cpuValues[0])) {
-					secondPlayer = new AiAnn();
-				} else if (cpuType.equals(cpuValues[1])) {
-					secondPlayer = new AiBeatrice();
-				} else if (cpuType.equals(cpuValues[2])) {
-					secondPlayer = new AiCharlotte();
-				} else if (cpuType.equals(cpuValues[3])) {
-					secondPlayer = new AiDeborah();
-				} else {
-					Log.d("cpu", "CpuTypeNotFound " + cpuType);
-					secondPlayer = new AiAnn();
-				}
 			} else {
 				secondPlayer = bw;
 			}
@@ -93,8 +78,13 @@ public class GameActivity extends Activity {
 				Board board = (Board) ois.readObject();
 				byte side = ois.readByte();
 				byte vsType = ois.readByte();
-				Player secondPlayer = (vsType == Game.HUMAN) ? bw
-						: (new AiAnn());
+				Player secondPlayer;
+
+				if (vsType == Game.HUMAN) {
+					secondPlayer = bw;
+				} else {
+					secondPlayer = getAi((String) ois.readObject());
+				}
 				game = new Game(board, side, bw, secondPlayer, bw, vsType);
 				byte n = ois.readByte();
 				// bw.ballSizeRecalc();
@@ -119,6 +109,26 @@ public class GameActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 
+	}
+
+	private ArtificialIntilligence getAi(String cpuValue) {
+		Resources resources = getResources();
+		String[] cpuValues = resources.getStringArray(R.array.bot_values);
+		ArtificialIntilligence secondPlayer;
+		if (cpuValue.equals(cpuValues[0])) {
+			secondPlayer = new AiAnn();
+		} else if (cpuValue.equals(cpuValues[1])) {
+			secondPlayer = new AiBeatrice();
+		} else if (cpuValue.equals(cpuValues[2])) {
+			secondPlayer = new AiCharlotte();
+		} else if (cpuValue.equals(cpuValues[3])) {
+			secondPlayer = new AiDeborah();
+		} else {
+			Log.d("cpu", "CpuTypeNotFound " + cpuValue);
+			secondPlayer = new AiAnn();
+		}
+
+		return secondPlayer;
 	}
 
 	private void startGame() {
@@ -152,12 +162,15 @@ public class GameActivity extends Activity {
 			oos.writeObject(game.getBoard());
 			oos.writeByte(game.getSide());
 			oos.writeByte(game.getVsType());
+			oos.writeObject(cpuType);
 			oos.writeByte(game.getBoard().getMarblesCaptured(Side.BLACK));
 			oos.writeByte(game.getBoard().getMarblesCaptured(Side.WHITE));
 			oos.close();
 
 		} catch (FileNotFoundException e) {
+			Log.d("state", "FileNotFound");
 		} catch (IOException e) {
+			Log.d("state", "IO Excaption");
 		}
 
 		super.onPause();
