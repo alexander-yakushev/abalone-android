@@ -112,19 +112,14 @@ public class GameActivity extends Activity {
 	}
 
 	private ArtificialIntilligence getAi(String cpuValue) {
-		Resources resources = getResources();
-		String[] cpuValues = resources.getStringArray(R.array.bot_values);
-		ArtificialIntilligence secondPlayer;
-		if (cpuValue.equals(cpuValues[0])) {
-			secondPlayer = new AiAnn();
-		} else if (cpuValue.equals(cpuValues[1])) {
-			secondPlayer = new AiBeatrice();
-		} else if (cpuValue.equals(cpuValues[2])) {
-			secondPlayer = new AiCharlotte();
-		} else if (cpuValue.equals(cpuValues[3])) {
-			secondPlayer = new AiDeborah();
-		} else {
-			Log.d("cpu", "CpuTypeNotFound " + cpuValue);
+		final String prefix = "com.bytopia.abalone.mechanics.";
+		ArtificialIntilligence secondPlayer = null;
+		try {
+			secondPlayer = (ArtificialIntilligence) Class.forName(
+					prefix + cpuValue).newInstance();
+			Log.d("cpu",secondPlayer.getClass().getSimpleName()+" used.");
+		} catch (Exception e) {
+			Log.d("cpu", "NotSuchCpuExcaption. AiAnn used.");
 			secondPlayer = new AiAnn();
 		}
 

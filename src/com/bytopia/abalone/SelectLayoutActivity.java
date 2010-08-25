@@ -7,30 +7,35 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.bytopia.abalone.mechanics.ArtificialIntilligence;
 import com.bytopia.abalone.mechanics.Board;
-import com.bytopia.abalone.mechanics.ClassicLayout;
 import com.bytopia.abalone.mechanics.Layout;
 import com.bytopia.abalone.mechanics.Side;
 
 public class SelectLayoutActivity extends Activity {
 
 	List<Layout> layouts;
+	private int index = 0;
+	private BoardView boardView;
+	private Button prev;
+	private Button next;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		layouts = new ArrayList<Layout>();
-		for (String layout : getResources().getStringArray(R.array.game_layouts)) {
+		for (String layout : getResources()
+				.getStringArray(R.array.game_layouts)) {
 			String tempAi = "com.bytopia.abalone.mechanics." + layout;
 			try {
 				Class layoutClass = Class.forName(tempAi);
-				Layout l = (Layout)layoutClass.newInstance();
+				Layout l = (Layout) layoutClass.newInstance();
 				layouts.add(l);
-				
+
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -38,14 +43,43 @@ public class SelectLayoutActivity extends Activity {
 		}
 
 		setContentView(R.layout.layout_selecting);
-		BoardView boardView = new BoardView(getApplicationContext()) {
+		boardView = new BoardView(getApplicationContext()) {
 			@Override
 			public boolean onTouchEvent(MotionEvent e) {
 				return true;
 			}
 		};
-		boardView.drawBoard(new Board(new ClassicLayout(), Side.BLACK));
+
+		prev = (Button) findViewById(R.id.slect_layout_prev);
+		next = (Button) findViewById(R.id.slect_layout_next);
+		refrashLayout();
+
 		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_selecting_layout);
 		linearLayout.addView(boardView);
+	}
+
+	private void refrashLayout() {
+		boardView.drawBoard(new Board(layouts.get(index), Side.BLACK));
+		if (index == 0) {
+			prev.setEnabled(false);
+		} else {
+			prev.setEnabled(true);
+		}
+
+		if (index == layouts.size() - 1) {
+			next.setEnabled(false);
+		} else {
+			next.setEnabled(true);
+		}
+	}
+
+	public void prev(View view) {
+		index--;
+		refrashLayout();
+	}
+
+	public void next(View view) {
+		index++;
+		refrashLayout();
 	}
 }

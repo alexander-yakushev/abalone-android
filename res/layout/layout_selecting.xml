@@ -26,13 +26,18 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/prev" />
+            android:text="@string/prev"
+            android:onClick="prev"
+            android:id="@+id/slect_layout_prev"/>
+             
     
         <Button
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1" 
-            android:text="@string/next"/>
+            android:text="@string/next"
+            android:onClick="next"
+            android:id="@+id/slect_layout_next"/>
   	
   </LinearLayout>
 </LinearLayout>
