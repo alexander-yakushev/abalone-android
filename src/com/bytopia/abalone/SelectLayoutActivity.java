@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,13 @@ public class SelectLayoutActivity extends Activity {
 		boardView = new BoardView(getApplicationContext()) {
 			@Override
 			public boolean onTouchEvent(MotionEvent e) {
+				if (e.getAction() == MotionEvent.ACTION_UP) {
+					String name = layouts.get(index).getClass().getName();
+					SharedPreferences preferences = PreferenceManager
+							.getDefaultSharedPreferences(getApplicationContext());
+					preferences.edit().putString("layout", name).commit();
+					finish();
+				}
 				return true;
 			}
 		};

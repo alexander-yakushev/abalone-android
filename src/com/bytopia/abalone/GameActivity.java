@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -20,13 +19,11 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.bytopia.abalone.mechanics.AiAnn;
-import com.bytopia.abalone.mechanics.AiBeatrice;
-import com.bytopia.abalone.mechanics.AiCharlotte;
-import com.bytopia.abalone.mechanics.AiDeborah;
 import com.bytopia.abalone.mechanics.ArtificialIntilligence;
 import com.bytopia.abalone.mechanics.Board;
 import com.bytopia.abalone.mechanics.ClassicLayout;
 import com.bytopia.abalone.mechanics.Game;
+import com.bytopia.abalone.mechanics.Layout;
 import com.bytopia.abalone.mechanics.Player;
 import com.bytopia.abalone.mechanics.Side;
 
@@ -52,10 +49,10 @@ public class GameActivity extends Activity {
 			Player secondPlayer;
 			// SharedPreferences pref =
 			// this.getApplicationContext().getSharedPreferences(name, mode)
-			if (sp.equals("cpu")) {
+			SharedPreferences pref = PreferenceManager
+					.getDefaultSharedPreferences(getApplicationContext());
 
-				SharedPreferences pref = PreferenceManager
-						.getDefaultSharedPreferences(getApplicationContext());
+			if (sp.equals("cpu")) {
 
 				cpuType = intent.getExtras().getString("cpu_type");
 				if (cpuType == null) {
@@ -67,7 +64,18 @@ public class GameActivity extends Activity {
 			} else {
 				secondPlayer = bw;
 			}
-			game = new Game(new ClassicLayout(), Side.BLACK, bw, secondPlayer,
+			Layout layout;
+			try {
+				 layout = (Layout) Class.forName(
+						pref.getString("layout",
+								"com.bytopia.abalone.mechanics.ClassicLayout"))
+						.newInstance();
+			} catch (Exception e) {
+				Log.d("layout","Wrong Layout");
+				layout = new ClassicLayout();
+			} 
+			
+			game = new Game(layout, Side.BLACK, bw, secondPlayer,
 					bw, sp.equals("cpu") ? Game.CPU : Game.HUMAN);
 			startGame();
 		} else if (intent.getAction().equals("com.bytopia.abalone.RESUMEGAME")) {
@@ -117,7 +125,7 @@ public class GameActivity extends Activity {
 		try {
 			secondPlayer = (ArtificialIntilligence) Class.forName(
 					prefix + cpuValue).newInstance();
-			Log.d("cpu",secondPlayer.getClass().getSimpleName()+" used.");
+			Log.d("cpu", secondPlayer.getClass().getSimpleName() + " used.");
 		} catch (Exception e) {
 			Log.d("cpu", "NotSuchCpuExcaption. AiAnn used.");
 			secondPlayer = new AiAnn();
