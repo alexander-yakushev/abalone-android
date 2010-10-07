@@ -25,14 +25,24 @@ public final class Cell {
 	private static Cell[][] cellStorage = new Cell[12][12];
 
 	/**
+	 * An array that stores minimal column value for each row
+	 */
+	private static int[] minColumn = {0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 0};
+	
+	/**
+	 * An array that stores maximal column value for each row
+	 */
+	private static int[] maxColumn = {0, 5, 6, 7, 8, 9, 9, 9, 9, 9, 0};
+	
+	/**
 	 * Initializes a storage with all possible cells.
 	 */
-	public static void init() {
+	static {
 		for (int i = 0; i < 12; i++)
 			for (int j = 0; j < 12; j++)
 				cellStorage[i][j] = new Cell(i, j);
 	}
-
+	
 	/**
 	 * Constructs a new cell.
 	 * 
@@ -56,9 +66,6 @@ public final class Cell {
 	 * @return cell instance
 	 */
 	public static Cell get(int row, int column) {
-//		if (row > 9 || row < 1 || column > Board.getMaxColumn(row)
-//				|| column < Board.getMinColumn(row))
-//			return cellStorage[10][10];
 		return cellStorage[row][column];
 	}
 
@@ -90,7 +97,7 @@ public final class Cell {
 	public Cell shift(Direction d) {
 		switch (d) {
 		case NorthWest:
-			if (row >= 1 && column >= Board.getMinColumn(row))
+			if (row >= 1 && column >= Cell.getMinColumn(row))
 				return get(row - 1, column - 1);
 			break;
 		case North:
@@ -98,11 +105,11 @@ public final class Cell {
 				return get(row - 1, column);
 			break;
 		case East:
-			if (column <= Board.getMaxColumn(row))
+			if (column <= Cell.getMaxColumn(row))
 				return get(row, column + 1);
 			break;
 		case SouthEast:
-			if (row <= 9 && column <= Board.getMaxColumn(row))
+			if (row <= 9 && column <= Cell.getMaxColumn(row))
 				return get(row + 1, column + 1);
 			break;
 		case South:
@@ -110,7 +117,7 @@ public final class Cell {
 				return get(row + 1, column);
 			break;
 		case West:
-			if (column >= Board.getMinColumn(row))
+			if (column >= Cell.getMinColumn(row))
 				return get(row, column - 1);
 			break;
 		}
@@ -184,6 +191,28 @@ public final class Cell {
 	 */
 	public boolean equals(Cell c) {
 		return (row == c.getRow() && column == c.getColumn());
+	}
+
+	/**
+	 * Returns the maximal column of the given row.
+	 * 
+	 * @param row
+	 *            number of row
+	 * @return number of maximal column in this row
+	 */
+	public static int getMaxColumn(int row) {
+		return maxColumn[row];
+	}
+
+	/**
+	 * Returns the minimal column of the given row.
+	 * 
+	 * @param row
+	 *            number of row
+	 * @return number of minimal column in this row
+	 */
+	public static int getMinColumn(int row) {
+		return minColumn[row];
 	}
 
 }

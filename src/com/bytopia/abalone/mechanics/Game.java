@@ -104,7 +104,7 @@ public class Game {
 	 * Starts the game process.
 	 */
 	public void start() {
-		Cell.init();
+//		Cell.init();
 		Move move = null;
 		int capturedBlack = board.getMarblesCaptured(Side.BLACK);
 		int capturedWhite=board.getMarblesCaptured(Side.WHITE);

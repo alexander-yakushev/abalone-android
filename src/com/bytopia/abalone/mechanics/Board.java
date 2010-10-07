@@ -59,28 +59,6 @@ public class Board implements Cloneable,Serializable {
 	}
 
 	/**
-	 * Returns the minimal column of the given row.
-	 * 
-	 * @param row
-	 *            number of row
-	 * @return number of minimal column in this row
-	 */
-	public static int getMinColumn(int row) {
-		return row < 6 ? 1 : row - 4;
-	}
-
-	/**
-	 * Returns the maximal column of the given row.
-	 * 
-	 * @param row
-	 *            number of row
-	 * @return number of maximal column in this row
-	 */
-	public static int getMaxColumn(int row) {
-		return row < 5 ? row + 4 : 9;
-	}
-
-	/**
 	 * Returns the state of the given cell - non-existing, empty, white or black
 	 * marble.
 	 * 
@@ -248,7 +226,7 @@ public class Board implements Cloneable,Serializable {
 	public List<Cell> getAllMarbles() {
 		List<Cell> list = new ArrayList<Cell>();
 		for (int i = 1; i <= 9; i++)
-			for (int j = getMinColumn(i); j <= getMaxColumn(i); j++)
+			for (int j = Cell.getMinColumn(i); j <= Cell.getMaxColumn(i); j++)
 				if (getState(i, j) == Side.WHITE
 						|| getState(i, j) == Side.BLACK)
 					list.add(Cell.get(i, j));
@@ -266,7 +244,7 @@ public class Board implements Cloneable,Serializable {
 	public List<Cell> getSideMarbles(byte side) {
 		List<Cell> list = new ArrayList<Cell>();
 		for (int i = 1; i <= 9; i++)
-			for (int j = getMinColumn(i); j <= getMaxColumn(i); j++)
+			for (int j = Cell.getMinColumn(i); j <= Cell.getMaxColumn(i); j++)
 				if (getState(i, j) == side)
 					list.add(Cell.get(i, j));
 		return list;

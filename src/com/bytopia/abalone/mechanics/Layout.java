@@ -41,10 +41,10 @@ public abstract class Layout {
 		byte[][] field = getBlackStartField();
 		byte t;
 		for (int i = 1; i < 5; i++) {
-			for (int j = Board.getMinColumn(i); j <= Board.getMaxColumn(i); j++) {
+			for (int j = Cell.getMinColumn(i); j <= Cell.getMaxColumn(i); j++) {
 				t = field[i][j];
-				field[i][j] = field[10 - i][Board.getMaxColumn(10 - i) - j + 1];
-				field[10 - i][Board.getMaxColumn(10 - i) - j + 1] = t;
+				field[i][j] = field[10 - i][Cell.getMaxColumn(10 - i) - j + 1];
+				field[10 - i][Cell.getMaxColumn(10 - i) - j + 1] = t;
 			}
 		}
 		return field;
