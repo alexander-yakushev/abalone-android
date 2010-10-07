@@ -226,7 +226,7 @@ public class Board implements Cloneable,Serializable {
 	public List<Cell> getAllMarbles() {
 		List<Cell> list = new ArrayList<Cell>();
 		for (int i = 1; i <= 9; i++)
-			for (int j = Cell.getMinColumn(i); j <= Cell.getMaxColumn(i); j++)
+			for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++)
 				if (getState(i, j) == Side.WHITE
 						|| getState(i, j) == Side.BLACK)
 					list.add(Cell.get(i, j));
@@ -244,7 +244,7 @@ public class Board implements Cloneable,Serializable {
 	public List<Cell> getSideMarbles(byte side) {
 		List<Cell> list = new ArrayList<Cell>();
 		for (int i = 1; i <= 9; i++)
-			for (int j = Cell.getMinColumn(i); j <= Cell.getMaxColumn(i); j++)
+			for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++)
 				if (getState(i, j) == side)
 					list.add(Cell.get(i, j));
 		return list;

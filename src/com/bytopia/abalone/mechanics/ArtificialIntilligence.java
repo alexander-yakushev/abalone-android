@@ -118,8 +118,7 @@ public abstract class ArtificialIntilligence implements Player {
 						- MARBLE_COSTS[b.getMarblesCaptured(side)]
 						+ Math.random() * 0.000001;
 				for (int i = 1; i <= 9; i++)
-					for (int j = Cell.getMinColumn(i); j <= Cell
-							.getMaxColumn(i); j++) {
+					for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++) {
 						if (f[i][j] == side)
 							sum += 1 / (Cell.get(i, j).findDistance(center) + 1.0);
 						else if (f[i][j] == oppSide)
@@ -127,8 +126,7 @@ public abstract class ArtificialIntilligence implements Player {
 					}
 				if (analyzeNeighbours) {
 					for (int i = 1; i <= 9; i++)
-						for (int j = Cell.getMinColumn(i); j <= Cell
-								.getMaxColumn(i); j++) {
+						for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++) {
 							if (f[i][j] == side) {
 								if (f[i - 1][j] == side)
 									sum += NEIGHBOUR_IMPORTANCE_COEFFICIENT;
@@ -149,8 +147,7 @@ public abstract class ArtificialIntilligence implements Player {
 			} else {
 				double sum = 0;
 				for (int i = 1; i <= 9; i++)
-					for (int j = Cell.getMinColumn(i); j <= Cell
-							.getMaxColumn(i); j++) {
+					for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++) {
 						if (f[i][j] == side) {
 							if (f[i - 1][j] == side)
 								sum--;
@@ -175,7 +172,7 @@ public abstract class ArtificialIntilligence implements Player {
 			Cell original, shifted1, shifted2, shifted3, shifted4;
 			byte state1, state2, state3, state4, state5;
 			flag: for (int i = 1; i <= 9; i++)
-				for (int j = Cell.getMinColumn(i); j <= Cell.getMaxColumn(i); j++) {
+				for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++) {
 					if (f[i][j] == side) {
 						for (Direction d : SECONDARY_DIRECTIONS) {
 							original = Cell.get(i, j);
@@ -285,7 +282,7 @@ public abstract class ArtificialIntilligence implements Player {
 											ab == Double.NEGATIVE_INFINITY ? ab
 													: -ab, aiState,
 											analyzeNeighbours);
- 									if (currValue < bestValue) {
+									if (currValue < bestValue) {
 										bestValue = currValue;
 										bestMove = m;
 										if (alphabeta > bestValue)

@@ -27,12 +27,12 @@ public final class Cell {
 	/**
 	 * An array that stores minimal column value for each row
 	 */
-	private static int[] minColumn = {0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 0};
+	public static int[] minColumn = {0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 0};
 	
 	/**
 	 * An array that stores maximal column value for each row
 	 */
-	private static int[] maxColumn = {0, 5, 6, 7, 8, 9, 9, 9, 9, 9, 0};
+	public static int[] maxColumn = {0, 5, 6, 7, 8, 9, 9, 9, 9, 9, 0};
 	
 	/**
 	 * Initializes a storage with all possible cells.
@@ -97,7 +97,7 @@ public final class Cell {
 	public Cell shift(Direction d) {
 		switch (d) {
 		case NorthWest:
-			if (row >= 1 && column >= Cell.getMinColumn(row))
+			if (row >= 1 && column >= Cell.minColumn[row])
 				return get(row - 1, column - 1);
 			break;
 		case North:
@@ -105,11 +105,11 @@ public final class Cell {
 				return get(row - 1, column);
 			break;
 		case East:
-			if (column <= Cell.getMaxColumn(row))
+			if (column <= Cell.maxColumn[row])
 				return get(row, column + 1);
 			break;
 		case SouthEast:
-			if (row <= 9 && column <= Cell.getMaxColumn(row))
+			if (row <= 9 && column <= Cell.maxColumn[row])
 				return get(row + 1, column + 1);
 			break;
 		case South:
@@ -117,7 +117,7 @@ public final class Cell {
 				return get(row + 1, column);
 			break;
 		case West:
-			if (column >= Cell.getMinColumn(row))
+			if (column >= Cell.minColumn[row])
 				return get(row, column - 1);
 			break;
 		}
@@ -200,9 +200,9 @@ public final class Cell {
 	 *            number of row
 	 * @return number of maximal column in this row
 	 */
-	public static int getMaxColumn(int row) {
-		return maxColumn[row];
-	}
+//	public static int getMaxColumn(int row) {
+//		return maxColumn[row];
+//	}
 
 	/**
 	 * Returns the minimal column of the given row.
@@ -211,8 +211,8 @@ public final class Cell {
 	 *            number of row
 	 * @return number of minimal column in this row
 	 */
-	public static int getMinColumn(int row) {
-		return minColumn[row];
-	}
+//	public static int getMinColumn(int row) {
+//		return minColumn[row];
+//	}
 
 }
