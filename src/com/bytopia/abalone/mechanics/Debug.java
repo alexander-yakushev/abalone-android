@@ -4,7 +4,8 @@ package com.bytopia.abalone.mechanics;
 public class Debug {
 
 	public static void main(String[] args) throws Exception {
-		Cell.init();
+//		Cell.init();
+		System.out.println("start");
 		ConsoleWatcher cw = new ConsoleWatcher();
 		Game g = new Game(new ClassicLayout(), (byte)3, new AiCharlotte(), new AiCharlotte(), cw, (byte)0);
 		cw.setGame(g);
