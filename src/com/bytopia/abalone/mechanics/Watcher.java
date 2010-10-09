@@ -22,7 +22,7 @@ public interface Watcher {
 	 * @param direction
 	 *            the direction of this move
 	 */
-	void doAnimation(MoveType moveType, Direction direction);
+	void doAnimation(MoveType moveType, byte direction);
 
 	/**
 	 * Displays information that the game is over and shows the given side as a

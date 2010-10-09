@@ -32,7 +32,7 @@ public class ConsoleWatcher implements Watcher {
 	/**
 	 * Shows animation. Not used.
 	 */
-	public void doAnimation(MoveType moveType, Direction direction) {
+	public void doAnimation(MoveType moveType, byte direction) {
 	}
 
 	/**

@@ -28,20 +28,20 @@ public abstract class ArtificialIntilligence implements Player {
 	/**
 	 * Directions that are primary for an AI. Used for performance reasons.
 	 */
-	private static Direction[] PRIMARY_DIRECTIONS = { Direction.East,
+	private static byte[] PRIMARY_DIRECTIONS = { Direction.East,
 			Direction.South, Direction.SouthEast };
 
 	/**
 	 * Directions that are secondary for an AI. Used for performance reasons.
 	 */
-	private static Direction[] SECONDARY_DIRECTIONS = { Direction.West,
+	private static byte[] SECONDARY_DIRECTIONS = { Direction.West,
 			Direction.North, Direction.NorthWest };
 
 	/**
 	 * All the directions excluding north and south. Used for performance
 	 * reasons.
 	 */
-	private static Direction[] NOT_NORTH_SOUTH_DIRECTIONS = {
+	private static byte[] NOT_NORTH_SOUTH_DIRECTIONS = {
 			Direction.NorthWest, Direction.SouthEast, Direction.West,
 			Direction.East };
 
@@ -49,13 +49,13 @@ public abstract class ArtificialIntilligence implements Player {
 	 * All the directions excluding north-west and south-east. Used for
 	 * performance reasons.
 	 */
-	private static Direction[] NOT_NW_SE_DIRECTIONS = { Direction.North,
+	private static byte[] NOT_NW_SE_DIRECTIONS = { Direction.North,
 			Direction.South, Direction.West, Direction.East };
 
 	/**
 	 * All the directions excluding west and east. Used for performance reasons.
 	 */
-	private static Direction[] NOT_WEST_EAST_DIRECTIONS = {
+	private static byte[] NOT_WEST_EAST_DIRECTIONS = {
 			Direction.NorthWest, Direction.SouthEast, Direction.North,
 			Direction.South };
 
@@ -77,7 +77,7 @@ public abstract class ArtificialIntilligence implements Player {
 	 *            arbitrary direction
 	 * @return one of the static collections of directions
 	 */
-	private static Direction[] getNotDirection(Direction d) {
+	private static byte[] getNotDirection(byte d) {
 		if (d == Direction.North || d == Direction.South)
 			return NOT_NORTH_SOUTH_DIRECTIONS;
 		else if (d == Direction.NorthWest || d == Direction.SouthEast)
@@ -109,7 +109,7 @@ public abstract class ArtificialIntilligence implements Player {
 	 */
 	private double evaluatePosition(Board b, byte side, int steps,
 			double alphabeta, int aiState, boolean analyzeNeighbours) {
-		Cell center = Cell.get(5, 5);
+		Cell center = Cell.storage[5][5];
 		byte[][] f = b.getField();
 		byte oppSide = Side.opposite(side);
 		if (steps == 0) {
@@ -120,9 +120,9 @@ public abstract class ArtificialIntilligence implements Player {
 				for (int i = 1; i <= 9; i++)
 					for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++) {
 						if (f[i][j] == side)
-							sum += 1 / (Cell.get(i, j).findDistance(center) + 1.0);
+							sum += 1 / (Cell.storage[i][j].findDistance(center) + 1.0);
 						else if (f[i][j] == oppSide)
-							sum -= 1 / (Cell.get(i, j).findDistance(center) + 1.0);
+							sum -= 1 / (Cell.storage[i][j].findDistance(center) + 1.0);
 					}
 				if (analyzeNeighbours) {
 					for (int i = 1; i <= 9; i++)
@@ -174,8 +174,8 @@ public abstract class ArtificialIntilligence implements Player {
 			flag: for (int i = 1; i <= 9; i++)
 				for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++) {
 					if (f[i][j] == side) {
-						for (Direction d : SECONDARY_DIRECTIONS) {
-							original = Cell.get(i, j);
+						for (byte d : SECONDARY_DIRECTIONS) {
+							original = Cell.storage[i][j];
 							shifted1 = original.shift(d);
 							state1 = b.getState(shifted1);
 							if (state1 == Layout.E) {
@@ -246,8 +246,8 @@ public abstract class ArtificialIntilligence implements Player {
 								}
 							}
 						}
-						for (Direction d : PRIMARY_DIRECTIONS) {
-							original = Cell.get(i, j);
+						for (byte d : PRIMARY_DIRECTIONS) {
+							original = Cell.storage[i][j];
 							shifted1 = original.shift(d);
 							state1 = b.getState(shifted1);
 							if (state1 == Layout.E) {
@@ -315,7 +315,7 @@ public abstract class ArtificialIntilligence implements Player {
 											ab = bestValue;
 										}
 									}
-									for (Direction md : getNotDirection(d)) {
+									for (byte md : getNotDirection(d)) {
 										if (b.getState(original.shift(md)) == Layout.E
 												&& b.getState(shifted1
 														.shift(md)) == Layout.E
@@ -342,7 +342,7 @@ public abstract class ArtificialIntilligence implements Player {
 										}
 									}
 								}
-								for (Direction md : getNotDirection(d)) {
+								for (byte md : getNotDirection(d)) {
 									if (b.getState(original.shift(md)) == Layout.E
 											&& b.getState(shifted1.shift(md)) == Layout.E) {
 										futureBoard = b.clone();

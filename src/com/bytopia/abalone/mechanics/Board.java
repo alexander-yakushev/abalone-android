@@ -6,20 +6,21 @@ import java.util.List;
 
 /**
  * Class that represents a playing board with all cells and marbles in them.
+ * 
  * @author Bytopia
  */
-public class Board implements Cloneable,Serializable {
+public class Board implements Cloneable, Serializable {
 
 	/**
 	 * Array of cell descriptions.
 	 */
 	private byte[][] field;
-	
+
 	/**
 	 * Number of white marbles captured.
 	 */
 	private int whiteCaptured = 0;
-	
+
 	/**
 	 * Number of black marbles captured.
 	 */
@@ -68,7 +69,7 @@ public class Board implements Cloneable,Serializable {
 	 *         the Layout class
 	 */
 	public byte getState(Cell c) {
-		return field[c.getRow()][c.getColumn()];
+		return field[c.row][c.column];
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class Board implements Cloneable,Serializable {
 	 *            numeric representation of cell state
 	 */
 	private void setState(Cell c, byte state) {
-		field[c.getRow()][c.getColumn()] = state;
+		field[c.row][c.column] = state;
 	}
 
 	/**
@@ -114,11 +115,10 @@ public class Board implements Cloneable,Serializable {
 				result = false;
 		}
 		if (result == true)
-			return new MoveType(MoveType.LEAP, m.getSource(),
-					destination);
+			return new MoveType(MoveType.LEAP, m.getSource(), destination);
 		// If move is a pushing move...
 		if (m.isPushing()) {
-			Direction d = m.getDirection();
+			byte d = m.getDirection();
 			// ...check if it is a silent pushing move
 			if (getState(m.getPeak().shift(d)) == Layout.E)
 				return new MoveType(MoveType.SILENTPUSH, m.getSource(),
@@ -229,7 +229,7 @@ public class Board implements Cloneable,Serializable {
 			for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++)
 				if (getState(i, j) == Side.WHITE
 						|| getState(i, j) == Side.BLACK)
-					list.add(Cell.get(i, j));
+					list.add(Cell.storage[i][j]);
 		return list;
 	}
 
@@ -246,7 +246,7 @@ public class Board implements Cloneable,Serializable {
 		for (int i = 1; i <= 9; i++)
 			for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++)
 				if (getState(i, j) == side)
-					list.add(Cell.get(i, j));
+					list.add(Cell.storage[i][j]);
 		return list;
 	}
 
@@ -268,14 +268,14 @@ public class Board implements Cloneable,Serializable {
 
 	/**
 	 * Returns the possible group to be moved on this board by given starting
-	 * cell, ending cell, side of player and presumable direction of selection.
+	 * cell, ending cell, side of player and presumably direction of selection.
 	 * Used by Player class.
 	 * 
 	 * @param start
 	 *            starting cell of the group
 	 * @param end
 	 *            possible ending cell of the group (if the cell is the same
-	 *            colour as the player's side and group is legal)
+	 *            color as the player's side and group is legal)
 	 * @param d
 	 *            direction of cell selection
 	 * @param side
@@ -284,7 +284,7 @@ public class Board implements Cloneable,Serializable {
 	 *         Otherwise the largest possible interval from start to the last
 	 *         legal cell in a given direction taken from start cell is returned
 	 */
-	public Group getUsableGroup(Cell start, Cell end, Direction d, byte side) {
+	public Group getUsableGroup(Cell start, Cell end, byte d, byte side) {
 		if (getState(start) == side)
 			if (getState(start.shift(d)) == side
 					&& start.findDistance(end) >= 1)
@@ -298,10 +298,12 @@ public class Board implements Cloneable,Serializable {
 		else
 			return null;
 	}
-	
+
 	/**
 	 * Sets the number of captured white marbles
-	 * @param whiteCaptured Quantity of white marbles captured by the enemy
+	 * 
+	 * @param whiteCaptured
+	 *            Quantity of white marbles captured by the enemy
 	 */
 	public void setWhiteCaptured(int whiteCaptured) {
 		this.whiteCaptured = whiteCaptured;
@@ -309,11 +311,12 @@ public class Board implements Cloneable,Serializable {
 
 	/**
 	 * Sets the number of captured black marbles
-	 * @param whiteCaptured Quantity of black marbles captured by the enemy
+	 * 
+	 * @param whiteCaptured
+	 *            Quantity of black marbles captured by the enemy
 	 */
 	public void setBlackCaptured(int blackCaptured) {
 		this.blackCaptured = blackCaptured;
 	}
-
 
 }

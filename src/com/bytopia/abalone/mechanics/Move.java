@@ -21,7 +21,7 @@ public class Move {
 	/**
 	 * Direction in which the group was moved.
 	 */
-	private Direction direction;
+	private byte direction;
 
 	/**
 	 * Side that performs a move.
@@ -39,7 +39,7 @@ public class Move {
 	 * @param side
 	 *            side that moves the group
 	 */
-	public Move(Group group, Direction d, byte side) {
+	public Move(Group group, byte d, byte side) {
 		source = group;
 		destination = group.shift(d);
 		direction = d;
@@ -69,7 +69,7 @@ public class Move {
 	 * 
 	 * @return direction of movement
 	 */
-	public Direction getDirection() {
+	public byte getDirection() {
 		return direction;
 	}
 
@@ -106,7 +106,7 @@ public class Move {
 	 * @return tail cell of the move
 	 */
 	public Cell getTail() {
-		return source.getPeak(Direction.opposite(direction));
+		return source.getPeak(Direction.opposite[direction]);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class Move {
 	 */
 	@Override
 	public String toString() {
-		return source.toString() + " " + direction.toString();
+		return source.toString() + " " + direction;
 	}
 	
 }

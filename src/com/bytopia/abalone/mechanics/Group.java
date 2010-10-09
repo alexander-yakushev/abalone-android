@@ -43,11 +43,11 @@ public class Group {
 		cells[0] = start;
 		cells[size - 1] = end;
 		if (size >= 3 && start.isOnAnyLine(end)) {
-			int rowStep = (end.getRow() - start.getRow()) / (size - 1);
-			int columnStep = (end.getColumn() - start.getColumn()) / (size - 1);
+			int rowStep = (end.row - start.row) / (size - 1);
+			int columnStep = (end.column - start.column) / (size - 1);
 			for (int i = 1; i < size - 1; i++) {
-				cells[i] = Cell.get(start.getRow() + (i * rowStep),
-						start.getColumn() + (i * columnStep));
+				cells[i] = Cell.storage[start.row + (i * rowStep)][start.column
+						+ (i * columnStep)];
 			}
 		}
 	}
@@ -107,8 +107,8 @@ public class Group {
 	 * @return amount of cells in the interval
 	 */
 	private static int cellsInRange(Cell start, Cell end) {
-		return Math.max(Math.abs(start.getRow() - end.getRow()),
-				Math.abs(start.getColumn() - end.getColumn()));
+		return Math.max(Math.abs(start.row - end.row), Math.abs(start.column
+				- end.column));
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class Group {
 	 *            direction of movement
 	 * @return shifted group
 	 */
-	public Group shift(Direction d) {
+	public Group shift(byte d) {
 		if (isAtom())
 			return new Group(cells[0].shift(d));
 		else
@@ -133,7 +133,7 @@ public class Group {
 	 *            another direction
 	 * @return true if their directions are the same, false otherwise
 	 */
-	public boolean isLineDirected(Direction d) {
+	public boolean isLineDirected(byte d) {
 		if (isAtom())
 			return false;
 		return cells[0].isOnLine(cells[size - 1], d);
@@ -159,34 +159,30 @@ public class Group {
 	 *            direction in which group should be moved
 	 * @return first cell of the group in this direction
 	 */
-	public Cell getPeak(Direction d) {
+	public Cell getPeak(byte d) {
 		Cell cell;
 		switch (d) {
-		case NorthWest:
-		case North:
-			cell = cells[0].getRow() < cells[1].getRow() ? cells[0] : cells[1];
+		case Direction.NorthWest:
+		case Direction.North:
+			cell = cells[0].row < cells[1].row ? cells[0] : cells[1];
 			if (size == 3)
-				cell = cell.getRow() < cells[2].getRow() ? cell : cells[2];
+				cell = cell.row < cells[2].row ? cell : cells[2];
 			break;
-		case East:
-			cell = cells[0].getColumn() > cells[1].getColumn() ? cells[0]
-					: cells[1];
+		case Direction.East:
+			cell = cells[0].column > cells[1].column ? cells[0] : cells[1];
 			if (size == 3)
-				cell = cell.getColumn() > cells[2].getColumn() ? cell
-						: cells[2];
+				cell = cell.column > cells[2].column ? cell : cells[2];
 			break;
-		case SouthEast:
-		case South:
-			cell = cells[0].getRow() > cells[1].getRow() ? cells[0] : cells[1];
+		case Direction.SouthEast:
+		case Direction.South:
+			cell = cells[0].row > cells[1].row ? cells[0] : cells[1];
 			if (size == 3)
-				cell = cell.getRow() > cells[2].getRow() ? cell : cells[2];
+				cell = cell.row > cells[2].row ? cell : cells[2];
 			break;
-		case West:
-			cell = cells[0].getColumn() < cells[1].getColumn() ? cells[0]
-					: cells[1];
+		case Direction.West:
+			cell = cells[0].column < cells[1].column ? cells[0] : cells[1];
 			if (size == 3)
-				cell = cell.getColumn() < cells[2].getColumn() ? cell
-						: cells[2];
+				cell = cell.column < cells[2].column ? cell : cells[2];
 			break;
 		default:
 			cell = null;

@@ -1,30 +1,28 @@
 package com.bytopia.abalone.mechanics;
 
 /**
- * Enumeration that represents possible all directions of movement.
+ * Pseudo-enumeration that represents possible all directions of movement.
  * 
  * @author Bytopia
  */
-public enum Direction {
+public class Direction {
 
-	NorthWest, North, East, West, South, SouthEast;
+	public final static byte NorthWest = 0;
+	public final static byte North = 1;
+	public final static byte East = 2;
+	public final static byte West = 3;
+	public final static byte South = 4;
+	public final static byte SouthEast = 5;
+
+	public final static byte[] storage = { NorthWest, North, East, West, South,
+			SouthEast };
+	public final static byte[] opposite = { SouthEast, South, West, East, North,
+			NorthWest };
 
 	/**
-	 * Converts an integer value into a Direction enumeration object.
-	 * @param value numeric value of the direction 
-	 * @return direction object
+	 * Private constructor to ensure that class is service-only.
 	 */
-	public static Direction convert(int value) {
-		return Direction.class.getEnumConstants()[value];
-	}
-
-	/**
-	 * Returns the opposite direction for a given direction.
-	 * @param d arbitrary direction
-	 * @return opposite direction
-	 */
-	public static Direction opposite(Direction d) {
-		return convert(5 - d.ordinal());
+	private Direction() {
 	}
 
 }

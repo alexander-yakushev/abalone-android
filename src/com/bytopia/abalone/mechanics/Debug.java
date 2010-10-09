@@ -15,12 +15,14 @@ public class Debug {
 //			}
 //		System.out.println("stop");
 		ConsoleWatcher cw = new ConsoleWatcher();
-		Game g = new Game(new ClassicLayout(), (byte)3, new AiDeborah(), new AiCharlotte(), cw, (byte)0);
+		Game g = new Game(new ClassicLayout(), (byte)3, new AiCharlotte(), new AiCharlotte(), cw, (byte)0);
 		cw.setGame(g);
+//		android.os.Debug.startMethodTracing();
 		g.start();
+//		android.os.Debug.stopMethodTracing();
 	}
 
-	public static Direction convDir(String s) {
+	public static byte convDir(String s) {
 		if (s.equals("NW"))
 			return Direction.NorthWest;//	public static Cell convCell(String s) {
 //		return new Cell((int) s.charAt(0) - (int) 'A' + 1, Integer

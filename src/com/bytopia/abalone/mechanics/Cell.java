@@ -11,38 +11,50 @@ public final class Cell {
 	/**
 	 * X coordinate of the cell.
 	 */
-	private int row;
+	public int row;
 
 	/**
 	 * Y coordinate of the cell.
 	 */
-	private int column;
+	public int column;
 
 	/**
 	 * An array that stores all possible cells on the board. Done in this way
 	 * because of performance issues.
 	 */
-	private static Cell[][] cellStorage = new Cell[12][12];
+	public static Cell[][] storage = new Cell[12][12];
 
 	/**
-	 * An array that stores minimal column value for each row
+	 * An array that stores neighbouring cells for every cell in every
+	 * direction.
 	 */
-	public static int[] minColumn = {0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 0};
-	
+	private static Cell[][][] shift = new Cell[12][12][6];
+
 	/**
-	 * An array that stores maximal column value for each row
+	 * An array that stores minimal column value for each row.
 	 */
-	public static int[] maxColumn = {0, 5, 6, 7, 8, 9, 9, 9, 9, 9, 0};
-	
+	public final static int[] minColumn = { 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 6 };
+
 	/**
-	 * Initializes a storage with all possible cells.
+	 * An array that stores maximal column value for each row.
+	 */
+	public final static int[] maxColumn = { 5, 5, 6, 7, 8, 9, 9, 9, 9, 9, 10, 10 };
+
+	/**
+	 * Initializes a storage and shift array with all possible cells.
 	 */
 	static {
+		// Initialize storage array
 		for (int i = 0; i < 12; i++)
 			for (int j = 0; j < 12; j++)
-				cellStorage[i][j] = new Cell(i, j);
+				storage[i][j] = new Cell(i, j);
+		// Initialize shift array
+		for (int i = 0; i < 12; i++)
+			for (int j = 0; j < 12; j++)
+				for (byte k = 0; k < 6; k++)
+					shift[i][j][k] = shiftInit(i, j, k);
 	}
-	
+
 	/**
 	 * Constructs a new cell.
 	 * 
@@ -57,73 +69,55 @@ public final class Cell {
 	}
 
 	/**
-	 * Returns a cell by given coordinates.
+	 * Returns a cell that is next to given cell in a given direction. Used for initial array filling.
 	 * 
+	 * @param d
+	 *            direction in which to search next cell
 	 * @param row
-	 *            X coordinate of the cell
+	 *            row of the cell
 	 * @param column
-	 *            Y coordinate of the cell
+	 *            column of the cell
 	 * @return cell instance
 	 */
-	public static Cell get(int row, int column) {
-		return cellStorage[row][column];
-	}
-
-	/**
-	 * Returns the X coordinate of the cell.
-	 * 
-	 * @return X coordinate
-	 */
-	public int getRow() {
-		return row;
-	}
-
-	/**
-	 * Returns the Y coordinate of the cell.
-	 * 
-	 * @return Y coordinate
-	 */
-	public int getColumn() {
-		return column;
+	private static Cell shiftInit(int row, int column, byte d) {
+		switch (d) {
+		case Direction.NorthWest:
+			if (row >= 1 && column >= Cell.minColumn[row])
+				return storage[row - 1][column - 1];
+			break;
+		case Direction.North:
+			if (row >= 1)
+				return storage[row - 1][column];
+			break;
+		case Direction.East:
+			if (column <= Cell.maxColumn[row])
+				return storage[row][column + 1];
+			break;
+		case Direction.SouthEast:
+			if (row <= 9 && column <= Cell.maxColumn[row])
+				return storage[row + 1][column + 1];
+			break;
+		case Direction.South:
+			if (row <= 9)
+				return storage[row + 1][column];
+			break;
+		case Direction.West:
+			if (column >= Cell.minColumn[row])
+				return storage[row][column - 1];
+			break;
+		}
+		return storage[row][column];
 	}
 
 	/**
 	 * Returns a cell that is next to this cell in a given direction.
-	 * 
-	 * @param d
-	 *            direction in which to search next cell
+	 * @param d direction in which to search next cell
 	 * @return cell instance
 	 */
-	public Cell shift(Direction d) {
-		switch (d) {
-		case NorthWest:
-			if (row >= 1 && column >= Cell.minColumn[row])
-				return get(row - 1, column - 1);
-			break;
-		case North:
-			if (row >= 1)
-				return get(row - 1, column);
-			break;
-		case East:
-			if (column <= Cell.maxColumn[row])
-				return get(row, column + 1);
-			break;
-		case SouthEast:
-			if (row <= 9 && column <= Cell.maxColumn[row])
-				return get(row + 1, column + 1);
-			break;
-		case South:
-			if (row <= 9)
-				return get(row + 1, column);
-			break;
-		case West:
-			if (column >= Cell.minColumn[row])
-				return get(row, column - 1);
-			break;
-		}
-		return get(row, column);
+	public Cell shift(byte d) {
+		return shift[row][column][d];
 	}
-
+	
 	/**
 	 * Tests if this cell is on any line with a given cell.
 	 * 
@@ -132,7 +126,7 @@ public final class Cell {
 	 * @return true if two cells are on the same line, false otherwise
 	 */
 	public boolean isOnAnyLine(Cell c) {
-		for (Direction d : Direction.values()) {
+		for (byte d : Direction.storage) {
 			if (isOnLine(c, d))
 				return true;
 		}
@@ -148,14 +142,13 @@ public final class Cell {
 	 *            direction of the line
 	 * @return true if two cells are on this line, false otherwise
 	 */
-	public boolean isOnLine(Cell c, Direction d) {
+	public boolean isOnLine(Cell c, byte d) {
 		if (d == Direction.NorthWest || d == Direction.SouthEast) {
-			return Math.abs(row - c.getRow()) == Math.abs(column
-					- c.getColumn());
+			return Math.abs(row - c.row) == Math.abs(column - c.column);
 		} else if (d == Direction.North || d == Direction.South) {
-			return Math.abs(column - c.getColumn()) == 0;
+			return Math.abs(column - c.column) == 0;
 		} else
-			return Math.abs(row - c.getRow()) == 0;
+			return Math.abs(row - c.row) == 0;
 	}
 
 	/**
@@ -166,8 +159,8 @@ public final class Cell {
 	 * @return Manhattan distance between two cells
 	 */
 	public int findDistance(Cell c) {
-		int cols = column - c.getColumn();
-		int rows = row - c.getRow();
+		int cols = column - c.column;
+		int rows = row - c.row;
 		if ((cols < 0) ^ (rows < 0))
 			return Math.abs(cols) + Math.abs(rows);
 		else
@@ -183,36 +176,16 @@ public final class Cell {
 		return Character.toString((char) ((int) 'A' + row - 1))
 				+ Integer.toString(column);
 	}
-	
+
 	/**
 	 * Tests if a current cell is equal to a given cell.
-	 * @param c another cell
+	 * 
+	 * @param c
+	 *            another cell
 	 * @return true if two cells are equal, false otherwise
 	 */
 	public boolean equals(Cell c) {
-		return (row == c.getRow() && column == c.getColumn());
+		return (row == c.row && column == c.column);
 	}
-
-	/**
-	 * Returns the maximal column of the given row.
-	 * 
-	 * @param row
-	 *            number of row
-	 * @return number of maximal column in this row
-	 */
-//	public static int getMaxColumn(int row) {
-//		return maxColumn[row];
-//	}
-
-	/**
-	 * Returns the minimal column of the given row.
-	 * 
-	 * @param row
-	 *            number of row
-	 * @return number of minimal column in this row
-	 */
-//	public static int getMinColumn(int row) {
-//		return minColumn[row];
-//	}
 
 }

@@ -436,7 +436,7 @@ public class BoardView extends View implements Player, Watcher {
 		return true;
 	}
 
-	Direction getDirection(float x, float y) {
+	byte getDirection(float x, float y) {
 		PointF tempPoint = getCentrPointOfSelectedGroup();
 		double angle = Math.atan((y - tempPoint.y) / (x - tempPoint.x));
 
@@ -452,7 +452,7 @@ public class BoardView extends View implements Player, Watcher {
 			tAngle -= 2 * Math.PI;
 		}
 		int t = (int) (tAngle / (Math.PI / 3d));
-		Direction d = null;
+		byte d = 0;
 		switch (t) {
 		case 0:
 			d = Direction.East;
@@ -477,7 +477,7 @@ public class BoardView extends View implements Player, Watcher {
 		return d;
 	}
 
-	Direction getDirectionFromCell(float x, float y, Cell c) {
+	byte getDirectionFromCell(float x, float y, Cell c) {
 		PointF tempPoint = getPointByCell(c);
 		double angle = Math.atan((y - tempPoint.y) / (x - tempPoint.x));
 
@@ -493,7 +493,7 @@ public class BoardView extends View implements Player, Watcher {
 			tAngle -= 2 * Math.PI;
 		}
 		int t = (int) (tAngle / (Math.PI / 3d));
-		Direction d = null;
+		byte d = 0;
 		switch (t) {
 		case 0:
 			d = Direction.East;
@@ -521,12 +521,12 @@ public class BoardView extends View implements Player, Watcher {
 
 	public PointF getPointByCell(Cell cell) {
 
-		float shift = (5f - cell.getRow()) * ballSize / 2f;
+		float shift = (5f - cell.row) * ballSize / 2f;
 		float x, y;
 
-		x = borderSize + shift + (cell.getColumn() - 1) * ballSize + ballSize
+		x = borderSize + shift + (cell.column - 1) * ballSize + ballSize
 				/ 2f;
-		y = (float) (borderSize + (cell.getRow() - 1) * ballSize * SQRT3_2)
+		y = (float) (borderSize + (cell.row - 1) * ballSize * SQRT3_2)
 				+ ballSize / 2f;
 
 		return new PointF(x, y);
@@ -559,7 +559,7 @@ public class BoardView extends View implements Player, Watcher {
 		}
 		Log.d("draw", "row = " + row);
 		Log.d("draw", "column = " + column);
-		return Cell.get(row, column);
+		return Cell.storage[row][column];
 	}
 
 	public Move requestMove(Game g) {
@@ -590,7 +590,7 @@ public class BoardView extends View implements Player, Watcher {
 	}
 
 	@Override
-	public void doAnimation(MoveType moveType, Direction direction) {
+	public void doAnimation(MoveType moveType, byte direction) {
 		double angle = 0;
 		double PI = Math.PI;
 		if (direction == Direction.East) {
