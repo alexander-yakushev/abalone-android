@@ -31,6 +31,10 @@ public final class Cell {
 	private static Cell[][][] shift = new Cell[12][12][6];
 
 	/**
+	 * And array that stores distances between every two cells.
+	 */
+	private static int[][][][] distances = new int[10][10][10][10];
+	/**
 	 * An array that stores minimal column value for each row.
 	 */
 	public final static int[] minColumn = { 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 6 };
@@ -41,7 +45,7 @@ public final class Cell {
 	public final static int[] maxColumn = { 5, 5, 6, 7, 8, 9, 9, 9, 9, 9, 10, 10 };
 
 	/**
-	 * Initializes a storage and shift array with all possible cells.
+	 * Initializes cell, shift and distance arrays.
 	 */
 	static {
 		// Initialize storage array
@@ -53,6 +57,12 @@ public final class Cell {
 			for (int j = 0; j < 12; j++)
 				for (byte k = 0; k < 6; k++)
 					shift[i][j][k] = shiftInit(i, j, k);
+		// Initialized distance array
+		for (int i = 1; i < 10; i++)
+			for (int j = 1; j < 10; j++)
+				for (int k = 1; k < 10; k++)
+					for (int l = 1; l < 10; l++)
+						distances[i][j][k][l] = distanceInit(i, j, k, l);
 	}
 
 	/**
@@ -158,14 +168,18 @@ public final class Cell {
 	 *            another cell
 	 * @return Manhattan distance between two cells
 	 */
-	public int findDistance(Cell c) {
-		int cols = column - c.column;
-		int rows = row - c.row;
+	private static int distanceInit(int arow, int acolumn, int brow, int bcolumn) {
+		int cols = acolumn - bcolumn;
+		int rows = arow - brow;
 		if ((cols < 0) ^ (rows < 0))
 			return Math.abs(cols) + Math.abs(rows);
 		else
 			return Math.max(Math.abs(cols), Math.abs(rows));
 
+	}
+	
+	public int findDistance(Cell c) {
+		return distances[this.row][this.column][c.row][c.column];
 	}
 
 	/**

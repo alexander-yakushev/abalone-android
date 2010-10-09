@@ -15,7 +15,7 @@ public class Debug {
 //			}
 //		System.out.println("stop");
 		ConsoleWatcher cw = new ConsoleWatcher();
-		Game g = new Game(new ClassicLayout(), (byte)3, new AiCharlotte(), new AiCharlotte(), cw, (byte)0);
+		Game g = new Game(new ClassicLayout(), (byte)3, new AiCharlotte(), new AiAnn(), cw, (byte)0);
 		cw.setGame(g);
 //		android.os.Debug.startMethodTracing();
 		g.start();
