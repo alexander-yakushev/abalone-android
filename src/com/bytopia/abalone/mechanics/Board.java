@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 /**
  * Class that represents a playing board with all cells and marbles in them.
  * 
@@ -258,8 +260,7 @@ public class Board implements Cloneable, Serializable {
 		Board b = new Board();
 		byte[][] f = new byte[11][11];
 		for (int i = 0; i < 11; i++)
-			for (int j = 0; j < 11; j++)
-				f[i][j] = field[i][j];
+			System.arraycopy(field[i], 0, f[i], 0, 11);
 		b.field = f;
 		b.whiteCaptured = whiteCaptured;
 		b.blackCaptured = blackCaptured;

@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class SplashAcitvity extends Activity {
-	long m_dwSplashTime = 3000;
+	long m_dwSplashTime = 2000;
 	boolean m_bPaused = false;
 
 	boolean m_bSplashActive = true;

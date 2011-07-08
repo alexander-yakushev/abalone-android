@@ -68,7 +68,7 @@ public class SelectLayoutActivity extends Activity {
 	}
 
 	private void refrashLayout() {
-		boardView.drawBoard(new Board(layouts.get(index), Side.BLACK));
+		//boardView.drawBoard(new Board(layouts.get(index), Side.BLACK));
 		if (index == 0) {
 			prev.setEnabled(false);
 		} else {

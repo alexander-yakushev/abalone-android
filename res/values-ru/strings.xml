@@ -4,7 +4,7 @@
 	<string name="app_name">Abalone</string>
 	<string name="new_game">Новая игра</string>
 	<string name="resume_game">Возобновить игру</string>
-	<string name="vs_cpu">с компьютера</string>
+	<string name="vs_cpu">с компьютером</string>
 	<string name="vs_human">с человеком</string>
 	<string name="new_game_vs_human">Новая игра с человеком</string>
 	<string name="new_game_vs_cpu">Новая игра с компьютером</string>
@@ -25,7 +25,7 @@
 		1) Три против двух\n
 		2) Три против одного\n
 		3) Два против одного\n
-		Вытолкните шарик за пределы поля.\n
+		Вытолкните шарик противника за пределы поля.\n
 
 		Вытолкните шесть – Вы победитель!\n
 	</string>

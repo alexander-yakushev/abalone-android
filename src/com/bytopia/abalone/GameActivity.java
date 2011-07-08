@@ -127,7 +127,7 @@ public class GameActivity extends Activity {
 					prefix + cpuValue).newInstance();
 			Log.d("cpu", secondPlayer.getClass().getSimpleName() + " used.");
 		} catch (Exception e) {
-			Log.d("cpu", "NotSuchCpuExcaption. AiAnn used.");
+			Log.d("cpu", "NotSuchCpuException. AiAnn used.");
 			secondPlayer = new AiAnn();
 		}
 

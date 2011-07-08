@@ -11,6 +11,7 @@ public class ConsoleWatcher implements Watcher {
 	 * Game instance being watched.
 	 */
 	private Game game;
+	private int moveCount = 0; 
 
 	/**
 	 * Sets the game to watch.
@@ -26,6 +27,8 @@ public class ConsoleWatcher implements Watcher {
 	 * Updates the information about the game.
 	 */
 	public void updateView() {
+		System.out.println("" + ++moveCount + ". Blacks: " + game.getBoard().getMarblesCaptured(Side.WHITE)
+				+ " Whites: " + game.getBoard().getMarblesCaptured(Side.BLACK));
 		System.out.println(game.getBoard());
 	}
 

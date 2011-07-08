@@ -17,10 +17,10 @@
 <resources>
 
     <string-array name="bot_names">
-        <item>ann</item>
-        <item>beatrice</item>
-        <item>charlotte</item>
-        <item>diana</item>  
+        <item>Easy</item>
+        <item>Fair</item>
+        <item>Normal</item>
+        <item>Hard</item>  
     </string-array>
     
     <string-array name="bot_values">

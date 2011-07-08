@@ -23,7 +23,7 @@ public abstract class ArtificialIntilligence implements Player {
 	 * Coefficient that is used by AI to determine how important is for marbles
 	 * to be together.
 	 */
-	private static double NEIGHBOUR_IMPORTANCE_COEFFICIENT = 0.1;
+	private static double NEIGHBOUR_IMPORTANCE_COEFFICIENT = 0.0001;
 
 	/**
 	 * Directions that are primary for an AI. Used for performance reasons.
