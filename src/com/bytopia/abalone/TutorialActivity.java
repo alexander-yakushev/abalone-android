@@ -1,13 +1,7 @@
 package com.bytopia.abalone;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import com.bytopia.abalone.mechanics.Board;
 import com.bytopia.abalone.mechanics.Cell;
-import com.bytopia.abalone.mechanics.ClassicLayout;
 import com.bytopia.abalone.mechanics.Direction;
 import com.bytopia.abalone.mechanics.EmptyLayout;
 import com.bytopia.abalone.mechanics.Group;
@@ -15,7 +9,6 @@ import com.bytopia.abalone.mechanics.Move;
 import com.bytopia.abalone.mechanics.Side;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,21 +63,6 @@ public class TutorialActivity extends Activity {
 		updateTutorial();
 
 		linearLayout.addView(tutorialBoardView);
-
-		// Board initialBoard = board.clone();
-		// Scenario scenario1 = new Scenario(tutorialBoardView);
-		// scenario1.SetActions(new Scenario.SelectGroup().construct(
-		// tutorialBoardView, new Group(Cell.storage[7][5],
-		// Cell.storage[7][7]), Scenario.PAUSE),
-		// new Scenario.SelectGroup().construct(tutorialBoardView, null,
-		// Scenario.PAUSE), new Scenario.MakeMove().construct(
-		// tutorialBoardView, new Move(new Group(
-		// Cell.storage[7][5], Cell.storage[7][7]),
-		// Direction.NorthWest, Side.BLACK), 0),
-		// new Scenario.UpdateBoard().construct(tutorialBoardView,
-		// initialBoard, Scenario.PAUSE));
-		// scenario1.start();
-		// currentScenario = scenario1;
 	}
 
 	private void initPiece() {
@@ -130,7 +108,7 @@ public class TutorialActivity extends Activity {
 						Cell.storage[6][6]), Scenario.HALF_PAUSE),
 				scMoveSingle.new MakeMove().construct(new Move(new Group(
 						Cell.storage[6][6]), Direction.West, Side.BLACK),
-						Scenario.HALF_PAUSE));
+						Scenario.PAUSE));
 
 		Board brdSelGroup = new Board(new EmptyLayout(), Side.BLACK);
 		putMarbles(brdSelGroup, new int[] { 3, 3, 4, 4, 3, 6, 3, 7, 4, 8, 7, 5,
@@ -227,17 +205,244 @@ public class TutorialActivity extends Activity {
 								Cell.storage[5][4]), Direction.SouthEast,
 								Side.BLACK), Scenario.PAUSE));
 
-		// Board brdPushMove = new Board(new EmptyLayout(), Side.BLACK);
-		// putMarbles(brdPushMove, new int[] { 4, 5, 5, 5, 6, 5 }, Side.BLACK);
-		// Scenario scLeapMove = new Scenario(tutorialBoardView, brdLeapMove);
+		Board brdPushMove = new Board(new EmptyLayout(), Side.BLACK);
+		putMarbles(brdPushMove,
+				new int[] { 5, 5, 6, 5, 6, 6, 7, 5, 7, 6, 7, 7 }, Side.WHITE);
+		Scenario scPushMove = new Scenario(tutorialBoardView, brdPushMove);
+		scPushMove.SetActions(scPushMove.new SelectGroup().construct(new Group(
+				Cell.storage[5][5], Cell.storage[7][5]), Scenario.HALF_PAUSE),
+				scPushMove.new MakeMove().construct(new Move(new Group(
+						Cell.storage[5][5], Cell.storage[7][5]),
+						Direction.North, Side.WHITE), Scenario.PAUSE),
+
+				scPushMove.new SelectGroup().construct(new Group(
+						Cell.storage[5][5], Cell.storage[7][7]),
+						Scenario.HALF_PAUSE), scPushMove.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[5][5],
+								Cell.storage[7][7]), Direction.NorthWest,
+								Side.WHITE), Scenario.PAUSE),
+
+				scPushMove.new SelectGroup().construct(new Group(
+						Cell.storage[6][5], Cell.storage[7][6]),
+						Scenario.HALF_PAUSE), scPushMove.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[6][5],
+								Cell.storage[7][6]), Direction.NorthWest,
+								Side.WHITE), Scenario.PAUSE),
+
+				scPushMove.new SelectGroup().construct(new Group(
+						Cell.storage[4][5], Cell.storage[6][5]),
+						Scenario.HALF_PAUSE), scPushMove.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[4][5],
+								Cell.storage[6][5]), Direction.North,
+								Side.WHITE), Scenario.PAUSE),
+
+				scPushMove.new SelectGroup().construct(new Group(
+						Cell.storage[4][4], Cell.storage[6][6]),
+						Scenario.HALF_PAUSE), scPushMove.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[4][4],
+								Cell.storage[6][6]), Direction.NorthWest,
+								Side.WHITE), Scenario.PAUSE),
+
+				scPushMove.new SelectGroup().construct(new Group(
+						Cell.storage[4][4], Cell.storage[5][4]),
+						Scenario.HALF_PAUSE), scPushMove.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[4][4],
+								Cell.storage[5][4]), Direction.North,
+								Side.WHITE), Scenario.PAUSE),
+
+				scPushMove.new RestoreBoard().construct(null, Scenario.PAUSE));
+
+		Board brdPushEnemy = new Board(new EmptyLayout(), Side.BLACK);
+		putMarbles(brdPushEnemy, new int[] { 2, 4, 2, 5, 3, 4, 3, 5, 4, 4, 4,
+				5, 4, 6 }, Side.WHITE);
+		putMarbles(brdPushEnemy, new int[] { 5, 5, 6, 4, 6, 5, 6, 6, 7, 4, 7,
+				6, 7, 7 }, Side.BLACK);
+		Scenario scPushEnemy = new Scenario(tutorialBoardView, brdPushEnemy);
+
+		scPushEnemy.SetActions(scPushEnemy.new SelectGroup().construct(
+				new Group(Cell.storage[5][5], Cell.storage[7][7]),
+				Scenario.HALF_PAUSE), scPushEnemy.new HighlightGroup()
+				.construct(new Group(Cell.storage[4][4]), Scenario.HALF_PAUSE),
+				scPushEnemy.new MakeMove().construct(new Move(new Group(
+						Cell.storage[5][5], Cell.storage[7][7]),
+						Direction.NorthWest, Side.BLACK), Scenario.PAUSE),
+
+				scPushEnemy.new SelectGroup().construct(new Group(
+						Cell.storage[2][4], Cell.storage[3][4]),
+						Scenario.HALF_PAUSE), scPushEnemy.new HighlightGroup()
+						.construct(new Group(Cell.storage[4][4]),
+								Scenario.HALF_PAUSE),
+				scPushEnemy.new MakeMove().construct(new Move(new Group(
+						Cell.storage[2][4], Cell.storage[3][4]),
+						Direction.South, Side.WHITE), Scenario.PAUSE),
+
+				scPushEnemy.new SelectGroup().construct(new Group(
+						Cell.storage[5][4], Cell.storage[7][4]),
+						Scenario.HALF_PAUSE), scPushEnemy.new HighlightGroup()
+						.construct(new Group(Cell.storage[3][4],
+								Cell.storage[4][4]), Scenario.HALF_PAUSE),
+				scPushEnemy.new MakeMove().construct(new Move(new Group(
+						Cell.storage[5][4], Cell.storage[7][4]),
+						Direction.North, Side.BLACK), Scenario.PAUSE),
+
+				scPushEnemy.new SelectGroup().construct(new Group(
+						Cell.storage[2][5], Cell.storage[4][5]),
+						Scenario.HALF_PAUSE), scPushEnemy.new HighlightGroup()
+						.construct(new Group(Cell.storage[5][5],
+								Cell.storage[6][5]), Scenario.HALF_PAUSE),
+				scPushEnemy.new MakeMove().construct(new Move(new Group(
+						Cell.storage[2][5], Cell.storage[4][5]),
+						Direction.South, Side.WHITE), Scenario.PAUSE),
+
+				scPushEnemy.new SelectGroup().construct(new Group(
+						Cell.storage[4][4], Cell.storage[6][4]),
+						Scenario.HALF_PAUSE), scPushEnemy.new HighlightGroup()
+						.construct(new Group(Cell.storage[2][4],
+								Cell.storage[3][4]), Scenario.HALF_PAUSE),
+				scPushEnemy.new MakeMove().construct(new Move(new Group(
+						Cell.storage[4][4], Cell.storage[6][4]),
+						Direction.North, Side.BLACK), Scenario.PAUSE),
+
+				scPushEnemy.new SelectGroup().construct(new Group(
+						Cell.storage[4][5], Cell.storage[4][6]),
+						Scenario.HALF_PAUSE), scPushEnemy.new HighlightGroup()
+						.construct(new Group(Cell.storage[4][4]),
+								Scenario.HALF_PAUSE),
+				scPushEnemy.new MakeMove().construct(new Move(new Group(
+						Cell.storage[4][5], Cell.storage[4][6]),
+						Direction.West, Side.WHITE), Scenario.PAUSE),
+
+				scPushEnemy.new RestoreBoard().construct(null, Scenario.PAUSE));
+
+		Board brdNoPush = new Board(new EmptyLayout(), Side.BLACK);
+		putMarbles(brdNoPush, new int[] { 5, 6, 5, 7, 5, 8 }, Side.WHITE);
+		putMarbles(brdNoPush, new int[] { 5, 2, 5, 3, 5, 4, 5, 5 }, Side.BLACK);
+		Scenario scNoPush = new Scenario(tutorialBoardView, brdNoPush);
+
+		Board brdCapture = new Board(new EmptyLayout(), Side.BLACK);
+		putMarbles(brdCapture, new int[] { 5, 7, 5, 8, 5, 9 }, Side.WHITE);
+		putMarbles(brdCapture, new int[] { 6, 9, 7, 9 }, Side.BLACK);
+		Scenario scCapture = new Scenario(tutorialBoardView, brdCapture);
+
+		scCapture.SetActions(scCapture.new SelectGroup().construct(new Group(
+				Cell.storage[6][9], Cell.storage[7][9]), Scenario.HALF_PAUSE),
+				scCapture.new HighlightGroup().construct(new Group(
+						Cell.storage[5][9]), Scenario.HALF_PAUSE),
+				scCapture.new MakeMove().construct(new Move(new Group(
+						Cell.storage[6][9], Cell.storage[7][9]),
+						Direction.North, Side.BLACK), Scenario.PAUSE),
+
+				scCapture.new SelectGroup().construct(new Group(
+						Cell.storage[5][7], Cell.storage[5][8]),
+						Scenario.HALF_PAUSE), scCapture.new HighlightGroup()
+						.construct(new Group(Cell.storage[5][9]),
+								Scenario.HALF_PAUSE), scCapture.new MakeMove()
+						.construct(
+								new Move(new Group(Cell.storage[5][7],
+										Cell.storage[5][8]), Direction.East,
+										Side.WHITE), Scenario.PAUSE),
+
+				scCapture.new RestoreBoard().construct(null, Scenario.PAUSE));
+
+		Board brdGameStart = new Board();
+		Scenario scGameStart = new Scenario(tutorialBoardView, brdGameStart);
+		scGameStart.SetActions(scGameStart.new SelectGroup().construct(
+				new Group(Cell.storage[7][6], Cell.storage[9][6]),
+				Scenario.HALF_PAUSE), scGameStart.new MakeMove().construct(
+				new Move(new Group(Cell.storage[7][6], Cell.storage[9][6]),
+						Direction.North, Side.BLACK), Scenario.PAUSE),
+
+		scGameStart.new SelectGroup().construct(new Group(Cell.storage[3][3],
+				Cell.storage[3][5]), Scenario.HALF_PAUSE),
+				scGameStart.new MakeMove().construct(new Move(new Group(
+						Cell.storage[3][3], Cell.storage[3][5]),
+						Direction.SouthEast, Side.WHITE), Scenario.PAUSE),
+
+				scGameStart.new SelectGroup().construct(new Group(
+						Cell.storage[7][5], Cell.storage[9][5]),
+						Scenario.HALF_PAUSE), scGameStart.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[7][5],
+								Cell.storage[9][5]), Direction.North,
+								Side.BLACK), Scenario.PAUSE),
+
+				scGameStart.new SelectGroup().construct(new Group(
+						Cell.storage[2][3], Cell.storage[2][5]),
+						Scenario.HALF_PAUSE), scGameStart.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[2][3],
+								Cell.storage[2][5]), Direction.South,
+								Side.WHITE), Scenario.PAUSE),
+
+				scGameStart.new SelectGroup().construct(new Group(
+						Cell.storage[7][7], Cell.storage[8][8]),
+						Scenario.HALF_PAUSE), scGameStart.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[7][7],
+								Cell.storage[8][8]), Direction.North,
+								Side.BLACK), Scenario.PAUSE),
+
+				scGameStart.new SelectGroup().construct(new Group(
+						Cell.storage[2][2], Cell.storage[4][4]),
+						Scenario.HALF_PAUSE), scGameStart.new MakeMove()
+						.construct(new Move(new Group(Cell.storage[2][2],
+								Cell.storage[4][4]), Direction.SouthEast,
+								Side.WHITE), Scenario.PAUSE),
+
+				scGameStart.new RestoreBoard().construct(null, Scenario.PAUSE));
+
+		Board brdFinish = new Board(new EmptyLayout(), Side.BLACK);
+		putMarbles(brdFinish, new int[] { 3, 3, 5, 2, 5, 4, 5, 5, 6, 3, 6, 5,
+				7, 4, 7, 5 }, Side.WHITE);
+		putMarbles(brdFinish, new int[] { 3, 2, 4, 2, 3, 7, 4, 7, 5, 7, 6, 7,
+				7, 7, 7, 8, 7, 9 }, Side.BLACK);
+		Scenario scFinish = new Scenario(tutorialBoardView, brdFinish);
+		scFinish.SetActions(scFinish.new MakeMove().construct(
+				new Move(new Group(Cell.storage[4][7]), Direction.NorthWest,
+						Side.BLACK), Scenario.PAUSE), scFinish.new MakeMove()
+				.construct(new Move(new Group(Cell.storage[5][4],
+						Cell.storage[5][5]), Direction.North, Side.WHITE),
+						Scenario.PAUSE), scFinish.new MakeMove().construct(
+				new Move(new Group(Cell.storage[3][6], Cell.storage[3][7]),
+						Direction.West, Side.BLACK), Scenario.PAUSE),
+				scFinish.new MakeMove().construct(new Move(new Group(
+						Cell.storage[5][2], Cell.storage[6][3]),
+						Direction.East, Side.WHITE), Scenario.PAUSE),
+				scFinish.new MakeMove().construct(new Move(new Group(
+						Cell.storage[5][7], Cell.storage[7][7]),
+						Direction.North, Side.BLACK), Scenario.PAUSE),
+				scFinish.new MakeMove().construct(new Move(new Group(
+						Cell.storage[7][4], Cell.storage[7][5]),
+						Direction.East, Side.WHITE), Scenario.PAUSE),
+				scFinish.new MakeMove().construct(new Move(new Group(
+						Cell.storage[7][8], Cell.storage[7][9]),
+						Direction.West, Side.BLACK), Scenario.PAUSE),
+				scFinish.new MakeMove().construct(new Move(new Group(
+						Cell.storage[6][5], Cell.storage[7][6]),
+						Direction.SouthEast, Side.WHITE), Scenario.PAUSE),
+				scFinish.new MakeMove().construct(new Move(new Group(
+						Cell.storage[6][7], Cell.storage[7][7]),
+						Direction.South, Side.BLACK), Scenario.PAUSE),
+				scFinish.new MakeMove().construct(new Move(new Group(
+						Cell.storage[7][6]), Direction.South, Side.WHITE),
+						Scenario.PAUSE), scFinish.new MakeMove().construct(
+						new Move(new Group(Cell.storage[7][8]),
+								Direction.NorthWest, Side.BLACK),
+						Scenario.PAUSE),
+
+				scFinish.new RestoreBoard().construct(null, Scenario.PAUSE));
 
 		piece = new Scenario[] { scIntro, scWhatIs, scMoveSingle, scSelGroup,
-				scLeapMove };
+				scLeapMove, scPushMove, scPushEnemy, scNoPush, scCapture,
+				scGameStart, scFinish };
 		scripts = new int[] { R.string.tutorial_step1_intro,
 				R.string.tutorial_step2_whatis,
 				R.string.tutorial_step3_movesingle,
 				R.string.tutorial_step4_selectgroup,
-				R.string.tutorial_step5_moveleap };
+				R.string.tutorial_step5_moveleap,
+				R.string.tutorial_step6_movepush,
+				R.string.tutorial_step7_enemypush,
+				R.string.tutorial_step8_nopush,
+				R.string.tutorial_step9_capture,
+				R.string.tutorial_step10_gamestart,
+				R.string.tutorial_step11_finish };
 	}
 
 	public void nextAct() {

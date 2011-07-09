@@ -23,7 +23,9 @@ public abstract class ArtificialIntilligence implements Player {
 	 * Coefficient that is used by AI to determine how important is for marbles
 	 * to be together.
 	 */
-	private static double NEIGHBOUR_IMPORTANCE_COEFFICIENT = 0.0001;
+	private static double NEIGHBOUR_IMPORTANCE_COEFFICIENT = 0.1;
+	private static float BDW = (float)10;
+	private static float EDC = (float)0.33;
 
 	/**
 	 * Directions that are primary for an AI. Used for performance reasons.
@@ -117,12 +119,13 @@ public abstract class ArtificialIntilligence implements Player {
 				double sum = MARBLE_COSTS[b.getMarblesCaptured(oppSide)]
 						- MARBLE_COSTS[b.getMarblesCaptured(side)]
 						+ Math.random() * 0.000001;
+				double edt = BDW + EDC * MARBLE_COSTS[b.getMarblesCaptured(oppSide)];
 				for (int i = 1; i <= 9; i++)
 					for (int j = Cell.minColumn[i]; j <= Cell.maxColumn[i]; j++) {
 						if (f[i][j] == side)
 							sum += 1 / (Cell.storage[i][j].findDistance(center) + 1.0);
 						else if (f[i][j] == oppSide)
-							sum -= 1 / (Cell.storage[i][j].findDistance(center) + 1.0);
+							sum -= edt / (Cell.storage[i][j].findDistance(center) + 1.0);
 					}
 				if (analyzeNeighbours) {
 					for (int i = 1; i <= 9; i++)

@@ -115,6 +115,41 @@
 		. Your marble can push one or two friendly marbles forward. The
 		destination cell should be empty.
 	</string>
+	<string name="tutorial_step7_enemypush">
+		By performing a push move you can actually push
+		<b>opponent\'s marbles</b>
+		. But remember that the number of your own marbles you push should be
+		greater than number of opponent\'s marbles being pushed.
+	</string>
+	<string name="tutorial_step8_nopush">
+		In this position black marbles cannot push white marbles though they
+		are greater in number. The reason is that you can push only
+		<b>three marbles</b>
+		of yours and the number of white marbles is also three.
+	</string>
+	<string name="tutorial_step9_capture">
+		If you push your opponent\'s marble
+		<b>out of the board</b>
+		it becomes
+		<b>captured</b>
+		(player loses it). To win Abalone game you have to capture
+		<b>six</b>
+		opponent\'s marbles.
+	</string>
+	<string name="tutorial_step10_gamestart">
+		And the last thing. Unlike most other board games, in Abalone
+		<b>black side moves first</b>
+		. In classic layout the first move does not give much of an advantage,
+		but in some other layouts it does.
+	</string>
+	<string name="tutorial_step11_finish">
+		Congratulations, you have completed Abalone 2 Tutorial! Now you have
+		the knowledge necessary to play your first game.
+		<b>Good luck</b>
+		and have fun! We hope you will
+		<b>love</b>
+		Abalone as much as we do!
+	</string>
 
 	<string name="preferences">Preferences</string>
 	<string name="cpu_type">CPU Type</string>

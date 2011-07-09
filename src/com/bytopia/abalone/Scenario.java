@@ -39,13 +39,12 @@ public class Scenario {
 		}
 	}
 
-	public class UpdateBoard extends Action {
+	public class RestoreBoard extends Action {
 
 		@Override
 		public void perform() {
-			Log.d("setBoard", "called from + "
-					+ Thread.currentThread().toString());
-			boardView.setBoard((Board) parameters);
+			Log.d("restore", "Board" + initial);
+			boardView.setBoard(initial.clone());
 		}
 	}
 
@@ -55,7 +54,6 @@ public class Scenario {
 		public void perform() {
 			boardView.setSelected(null);
 			boardView.setHighlighted(null);
-			Log.d("move", "called from + " + Thread.currentThread().toString());
 			boardView.makeMove((Move) parameters);
 		}
 	}
@@ -65,6 +63,15 @@ public class Scenario {
 		@Override
 		public void perform() {
 			boardView.setSelected((Group) parameters);
+			boardView.postInvalidate();
+		}
+	}
+	
+	public class HighlightGroup extends Action {
+
+		@Override
+		public void perform() {
+			boardView.setHighlighted((Group) parameters);
 			boardView.postInvalidate();
 		}
 	}
