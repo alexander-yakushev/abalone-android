@@ -166,6 +166,10 @@ public class BoardRenderer {
 
 		view.postInvalidate();
 	}
+	
+	public void updateBoard() {
+		updateBoard(board);
+	}
 
 	/**
 	 * Updates sizes according to the given board diameter.
@@ -189,6 +193,7 @@ public class BoardRenderer {
 	 */
 	public void setSelected(Group selected) {
 		selectedGroup = selected;
+		view.postInvalidate();
 	}
 
 	/**
@@ -199,6 +204,7 @@ public class BoardRenderer {
 	 */
 	public void setHighlighted(Group highlighted) {
 		highlightedGroup = highlighted;
+		view.postInvalidate();
 	}
 
 	/**
@@ -283,9 +289,6 @@ public class BoardRenderer {
 	 */
 	public void renderBoard(Canvas canvas) {
 		// TODO boar edges
-
-		Log.d("render", "BoardDrawer.RenderBoard, animation = " + animation
-				+ " at " + System.nanoTime());
 
 		canvas.save();
 
@@ -382,7 +385,6 @@ public class BoardRenderer {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			Log.d("animate", "PostInvalidate at " + System.nanoTime());
 			view.postInvalidate();
 		}
 		try {

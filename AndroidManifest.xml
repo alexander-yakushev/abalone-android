@@ -11,6 +11,13 @@
 			</intent-filter>
 		</activity>
 		
+		<activity android:name="TutorialActivity" android:label="@string/tutorial_title">
+			<intent-filter>
+				<action android:name="com.bytopia.abalone.TUTORIAL" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+		
 		<activity android:name="SplashAcitvity">
 			<intent-filter>
 				<category android:name= "android.intent.category.LAUNCHER"/>

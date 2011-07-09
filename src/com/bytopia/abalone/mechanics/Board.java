@@ -97,7 +97,7 @@ public class Board implements Cloneable, Serializable {
 	 * @param state
 	 *            numeric representation of cell state
 	 */
-	private void setState(Cell c, byte state) {
+	public void setState(Cell c, byte state) {
 		field[c.row][c.column] = state;
 	}
 

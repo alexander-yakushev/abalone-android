@@ -35,12 +35,17 @@ public final class R {
         public static final int n_game_cpu_s=0x7f090009;
         public static final int n_game_human=0x7f090006;
         public static final int n_game_human_s=0x7f090007;
-        public static final int preferences_menu=0x7f09000c;
+        public static final int next_step=0x7f09000f;
+        public static final int preferences_menu=0x7f090011;
+        public static final int prev_step=0x7f09000e;
         public static final int resume_game=0x7f09000a;
-        public static final int rules_menu=0x7f09000b;
+        public static final int rules_menu=0x7f090010;
         public static final int slect_layout_next=0x7f090002;
         public static final int slect_layout_prev=0x7f090001;
         public static final int top_balls=0x7f090004;
+        public static final int turorial_text=0x7f09000d;
+        public static final int tutorial=0x7f09000b;
+        public static final int tutorial_board_layout=0x7f09000c;
     }
     public static final class layout {
         public static final int layout_selecting=0x7f030000;
@@ -48,6 +53,7 @@ public final class R {
         public static final int menu=0x7f030002;
         public static final int rules=0x7f030003;
         public static final int splash=0x7f030004;
+        public static final int tutorial=0x7f030005;
     }
     public static final class menu {
         public static final int menu=0x7f080000;
@@ -55,19 +61,27 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f070001;
         public static final int black=0x7f070008;
-        public static final int cpu_type=0x7f07000f;
-        public static final int game_layout=0x7f070010;
+        public static final int cpu_type=0x7f070016;
+        public static final int finish=0x7f07001a;
+        public static final int game_layout=0x7f070017;
         public static final int game_over=0x7f07000b;
         public static final int hello=0x7f070000;
         public static final int new_game=0x7f070002;
         public static final int new_game_vs_cpu=0x7f070007;
         public static final int new_game_vs_human=0x7f070006;
-        public static final int next=0x7f070011;
-        public static final int preferences=0x7f07000e;
-        public static final int prev=0x7f070012;
+        public static final int next=0x7f070018;
+        public static final int preferences=0x7f070015;
+        public static final int prev=0x7f070019;
         public static final int resume_game=0x7f070003;
         public static final int rules=0x7f07000d;
         public static final int rules_title=0x7f07000c;
+        public static final int tutorial_step1_intro=0x7f07000f;
+        public static final int tutorial_step2_whatis=0x7f070010;
+        public static final int tutorial_step3_movesingle=0x7f070011;
+        public static final int tutorial_step4_selectgroup=0x7f070012;
+        public static final int tutorial_step5_moveleap=0x7f070013;
+        public static final int tutorial_step6_movepush=0x7f070014;
+        public static final int tutorial_title=0x7f07000e;
         public static final int vs_cpu=0x7f070004;
         public static final int vs_human=0x7f070005;
         public static final int white=0x7f070009;

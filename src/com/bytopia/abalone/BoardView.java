@@ -113,7 +113,7 @@ public class BoardView extends View implements Player, Watcher {
 		super.onSizeChanged(w, h, oldw, oldh);
 		measure(MeasureSpec.AT_MOST);
 		renderer.rescale(w, size);
-		renderer.updateBoard(board);
+		updateView();
 		Log.d("screen", "screen changed " + h + " " + w);
 	}
 
@@ -353,7 +353,9 @@ public class BoardView extends View implements Player, Watcher {
 
 	@Override
 	public void updateView() {
-		renderer.updateBoard(board);
+		if (board != null) {
+			renderer.updateBoard(board);
+		}
 	}
 
 	@Override
@@ -378,11 +380,11 @@ public class BoardView extends View implements Player, Watcher {
 	public void setGame(Game game) {
 		this.game = game;
 		this.board = game.getBoard();
-		renderer.updateBoard(board);
+		updateView();
 	}
 
 	public void screenChanged() {
-		renderer.updateBoard(board);
+		updateView();
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.bytopia.abalone;
 
+import java.net.InterfaceAddress;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -99,6 +101,15 @@ public class MainMenuActivity extends Activity {
 			}
 		});
 
+		Button tutorialButton = (Button) findViewById(R.id.tutorial);
+		tutorialButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent("com.bytopia.abalone.TUTORIAL");
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override

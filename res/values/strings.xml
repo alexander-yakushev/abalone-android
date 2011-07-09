@@ -23,17 +23,104 @@
 		line of marbles) or broadside (not parallel to the line of marbles),
 		as illustrated at right.\n
 
-		A player can push their opponent′s marbles which are in an adjacent
-		space to their own with an in-line move only. They can only push if
-		the pushing line has more marbles than the pushed line (three can push
-		two or one; two can push one).\nMarbles must be pushed into an open
-		space (i.e. not blocked by a marble of either colour).\nThe winner is
-		the first player to gain six opposing marbles from the opponent.
+		A player can push their opponent′s marbles
+		which are in an adjacent
+		space to their own with an in-line move only.
+		They can only push if
+		the pushing line has more marbles than the pushed
+		line (three can push
+		two or one; two can push one).\nMarbles must be
+		pushed into an open
+		space (i.e. not blocked by a marble of either
+		colour).\nThe winner is
+		the first player to gain six opposing marbles
+		from the opponent.
 	</string>
+	<string name="tutorial_title">Tutorial</string>
+	<string name="tutorial_step1_intro">
+		Welcome to
+		<b>Abalone 2 Tutorial!</b>
+		You picked the right place to get a glimpse of Abalone game basics and
+		rules. In a few steps we will teach you what is Abalone, what are its
+		differences from other board games and how to play it.\n
+
+		To proceed
+		further, please press
+		<b>Next</b>
+		.
+	</string>
+	<string name="tutorial_step2_whatis">
+		<b>Abalone</b>
+		is a classic head-to-head board game for
+		two players. Each player has
+		<b>14 marbles</b>
+		of
+		the same color at his command, one player owns black marbles and the
+		other owns white respectively.\n
+
+		Here you can see the initial position
+		of the marbles at the beginning of
+		the game (also called
+		<b>layout</b>
+		). It is
+		not the only layout used in Abalone - actually there are
+		plenty of
+		them!
+	</string>
+	<string name="tutorial_step3_movesingle">
+		In order to succeed players take turns to move
+		their marbles. Let\'s
+		take a look
+		how to move a
+		<b>single marble</b>
+		first.\n
+
+		You can move a single marble to
+		the neighbour cell
+		<b>in any direction</b>
+		.
+		The only
+		condition is that the
+		destination cell should
+		be
+		<b>empty</b>
+		- that
+		is, not occupied by friendly or
+		opponent\'s marble.
+	</string>
+	<string name="tutorial_step4_selectgroup">
+		In Abalone you can also move
+		<b>a group of marbles</b>
+		,
+		but there are some restrictions.
+		First of all, maximum number of
+		marbles you can move at a time is
+		<b>three</b>
+		. Second, they need to stay on
+		the
+		<b>same line</b>
+		.
+	</string>
+	<string name="tutorial_step5_moveleap">
+		The first kind of group move in Abalone is
+		<b>leap</b>
+		. It looks pretty much as single marble move. You can perform a leap
+		in any of
+		<b>four side directions</b>
+		. Each of the destination cells must be empty.
+	</string>
+	<string name="tutorial_step6_movepush">
+		Another kind of move is called
+		<b>push</b>
+		. Your marble can push one or two friendly marbles forward. The
+		destination cell should be empty.
+	</string>
+
 	<string name="preferences">Preferences</string>
 	<string name="cpu_type">CPU Type</string>
 	<string name="game_layout">Game Layout</string>
 	<string name="next">Next</string>
 	<string name="prev">Prev</string>
+	<string name="finish">Finish</string>
 
 </resources>
