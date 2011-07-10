@@ -197,9 +197,9 @@ public class Board implements Cloneable, Serializable {
 				if (cell == Layout.E)
 					s.append("- ");
 				else if (cell == Layout.W)
-					s.append("○ ");
+					s.append("o ");
 				else if (cell == Layout.B)
-					s.append("● ");
+					s.append("@ ");
 			if (j != 1 && j <= 5)
 				s.append(Integer.toString(j + 4));
 			s.append("\n");

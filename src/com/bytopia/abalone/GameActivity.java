@@ -66,17 +66,17 @@ public class GameActivity extends Activity {
 			}
 			Layout layout;
 			try {
-				 layout = (Layout) Class.forName(
+				layout = (Layout) Class.forName(
 						pref.getString("layout",
 								"com.bytopia.abalone.mechanics.ClassicLayout"))
 						.newInstance();
 			} catch (Exception e) {
-				Log.d("layout","Wrong Layout");
+				Log.d("layout", "Wrong Layout");
 				layout = new ClassicLayout();
-			} 
-			
-			game = new Game(layout, Side.BLACK, bw, secondPlayer,
-					bw, sp.equals("cpu") ? Game.CPU : Game.HUMAN);
+			}
+
+			game = new Game(layout, Side.BLACK, bw, secondPlayer, bw, sp
+					.equals("cpu") ? Game.CPU : Game.HUMAN);
 			startGame();
 		} else if (intent.getAction().equals("com.bytopia.abalone.RESUMEGAME")) {
 			Log.d("state", "resumeing");
@@ -93,14 +93,19 @@ public class GameActivity extends Activity {
 				} else {
 					secondPlayer = getAi((String) ois.readObject());
 				}
+
 				game = new Game(board, side, bw, secondPlayer, bw, vsType);
-				byte n = ois.readByte();
+
+				int n = ois.readInt();
+
+				Log.d("resume", "read!!!");
 				// bw.ballSizeRecalc();
 				game.getBoard().setBlackCaptured(n);
 
 				for (int i = 1; i <= n; i++) {
 					ballCaptured(Side.BLACK);
 				}
+
 				n = ois.readByte();
 				game.getBoard().setWhiteCaptured(n);
 				for (int i = 1; i <= n; i++) {
@@ -109,8 +114,11 @@ public class GameActivity extends Activity {
 
 				startGame();
 
-			} catch (Exception e) {
-				Log.d("state", "Error");
+			} catch (IOException e) {
+				Log.d("state", "IOException");
+				finish();
+			} catch (ClassNotFoundException e) {
+				Log.d("state", "ClassNotFoundException");
 				finish();
 			}
 		}
@@ -136,7 +144,6 @@ public class GameActivity extends Activity {
 
 	private void startGame() {
 		bw.setGame(game);
-		// bw.drawBoard(game.getBoard());
 		(new Thread(new Runnable() {
 
 			@Override
@@ -165,15 +172,17 @@ public class GameActivity extends Activity {
 			oos.writeObject(game.getBoard());
 			oos.writeByte(game.getSide());
 			oos.writeByte(game.getVsType());
-			oos.writeObject(cpuType);
-			oos.writeByte(game.getBoard().getMarblesCaptured(Side.BLACK));
-			oos.writeByte(game.getBoard().getMarblesCaptured(Side.WHITE));
+			if (cpuType != null) {
+				oos.writeObject(cpuType);
+			}
+			oos.writeInt(game.getBoard().getMarblesCaptured(Side.BLACK));
+			oos.writeInt(game.getBoard().getMarblesCaptured(Side.WHITE));
 			oos.close();
 
 		} catch (FileNotFoundException e) {
 			Log.d("state", "FileNotFound");
 		} catch (IOException e) {
-			Log.d("state", "IO Excaption");
+			Log.d("state", "IO Exception");
 		}
 
 		super.onPause();
@@ -189,8 +198,9 @@ public class GameActivity extends Activity {
 				LinearLayout ll1 = (LinearLayout) findViewById(R.id.top_balls);
 				LinearLayout ll2 = (LinearLayout) findViewById(R.id.bottom_balls);
 				ImageView iw = new ImageView(bw.getContext());
-				iw.setImageResource((side == Side.BLACK) ? R.drawable.black_ball
-						: R.drawable.white_ball);
+				iw
+						.setImageResource((side == Side.BLACK) ? R.drawable.black_ball
+								: R.drawable.white_ball);
 				iw.setAdjustViewBounds(true);
 				iw.setMaxHeight(DEFBALLSIZE);
 				iw.setMaxWidth(DEFBALLSIZE);
