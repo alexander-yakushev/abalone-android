@@ -31,12 +31,9 @@ public class MainMenuActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				Intent intent = new Intent("com.bytopia.abalone.GAME");
+				Intent intent = new Intent("com.bytopia.abalone.GAMEOPTIONS");
 				intent.putExtra("vs", "human");
-				intent.putExtra("type", "new");
 				startActivity(intent);
-
 			}
 		});
 
@@ -45,46 +42,9 @@ public class MainMenuActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				Intent intent = new Intent("com.bytopia.abalone.GAME");
-				// intent.getExtras().putString("side", "BLACK");
+				Intent intent = new Intent("com.bytopia.abalone.GAMEOPTIONS");
 				intent.putExtra("vs", "cpu");
-				intent.putExtra("type", "new");
 				startActivity(intent);
-
-			}
-		});
-
-		Button newGameButtonCpuSpecial = (Button) findViewById(R.id.n_game_cpu_s);
-		newGameButtonCpuSpecial.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				new AlertDialog.Builder(MainMenuActivity.this)
-						.setTitle(getResources().getString(R.string.cpu_type))
-						.setItems(R.array.bot_names,
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-
-										Intent intent = new Intent(
-												"com.bytopia.abalone.GAME");
-										intent.putExtra("side", "BLACK");
-										intent.putExtra("vs", "cpu");
-										intent.putExtra("type", "new");
-										String[] values = getResources()
-												.getStringArray(
-														R.array.bot_values);
-										String choise = values[which];
-										intent.putExtra("cpu_type", choise);
-										startActivity(intent);
-
-									}
-								}).create().show();
-
 			}
 		});
 

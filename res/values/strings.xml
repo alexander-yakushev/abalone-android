@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="hello">Hello World, Hello!</string>
-	<string name="app_name">Abalone</string>
+	<string name="app_name">Abalone 2</string>
 	<string name="new_game">New Game</string>
 	<string name="resume_game">Resume Game</string>
 	<string name="vs_cpu">vs CPU</string>
 	<string name="vs_human">vs Human</string>
 	<string name="new_game_vs_human">New Game vs Human</string>
 	<string name="new_game_vs_cpu">New Game vs CPU </string>
-	<string name="black">Black</string>
-	<string name="white">White</string>
-	<string name="wins">wins</string>
+	<string name="black">Black side </string>
+	<string name="white">White side </string>
+	<string name="wins">won the game!</string>
 	<string name="game_over">Game Over</string>
 
 	<string name="rules_title">Rules</string>
@@ -152,10 +152,12 @@
 	</string>
 
 	<string name="preferences">Preferences</string>
-	<string name="cpu_type">CPU Type</string>
+	<string name="cpu_type">Choose AI level</string>
 	<string name="game_layout">Game Layout</string>
 	<string name="next">Next</string>
 	<string name="prev">Prev</string>
 	<string name="finish">Finish</string>
+	<string name="game_options_title">Start new game</string>
+	<string name="game_options_start_game">Start game</string>
 
 </resources>

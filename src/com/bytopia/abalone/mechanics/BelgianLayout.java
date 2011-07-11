@@ -1,7 +1,7 @@
 package com.bytopia.abalone.mechanics;
 
 /**
- * Class that constructs a classic Abalone starting position.
+ * Class that constructs a "Belgian daisy" Abalone starting position.
  * 
  * @author Bytopia
  */

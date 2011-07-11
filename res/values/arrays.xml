@@ -33,6 +33,7 @@
     <string-array name="game_layouts">
     	<item>ClassicLayout</item>
     	<item>BelgianLayout</item>
+    	<item>GermanLayout</item>
     </string-array>
     
 </resources>

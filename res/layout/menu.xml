@@ -15,12 +15,6 @@
 			android:text="@string/new_game_vs_human"
 			android:id="@+id/n_game_human"
 			android:layout_weight="1"/>
-		<Button
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="   S   "
-			
-			android:id="@+id/n_game_human_s"/>
 	</LinearLayout>
 	<LinearLayout 
 		android:layout_height="wrap_content"
@@ -33,11 +27,6 @@
 			android:text="@string/new_game_vs_cpu"
 			android:layout_weight="1"
 			android:id="@+id/n_game_cpu"/>
-		<Button
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="   S   "
-			android:id="@+id/n_game_cpu_s"/>
 	</LinearLayout>
 	
 	<Button 

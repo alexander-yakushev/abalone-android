@@ -183,6 +183,7 @@ public class BoardRenderer {
 				3f * boardDiameter / 4f + 1, boardDiameter / 2);
 		balls = new ArrayList<RenderBall>();
 		ballSize = ((float) size - 2 * borderSize) / 9f;
+		view.postInvalidate();
 	}
 
 	/**

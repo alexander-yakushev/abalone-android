@@ -32,6 +32,8 @@ public class GameActivity extends Activity {
 	private Game game;
 	private String cpuType;
 	private static final String FILE_NAME = "gamedump.bin";
+	
+	private static final int CAPTURED_BALL_SIZE = 34;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,22 +43,23 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.main);
 		bw = (BoardView) findViewById(R.id.boardView);
 		bw.setParent(this);
+		
+		LinearLayout topBalls = (LinearLayout) findViewById(R.id.top_balls);
+		topBalls.setMinimumHeight(CAPTURED_BALL_SIZE);
+		LinearLayout bottomBalls = (LinearLayout) findViewById(R.id.bottom_balls);
+		bottomBalls.setMinimumHeight(CAPTURED_BALL_SIZE);
 
 		if (intent.getAction().equals("com.bytopia.abalone.GAME")) {
 
 			String sp = intent.getExtras().getString("vs");
 
 			Player secondPlayer;
-			// SharedPreferences pref =
-			// this.getApplicationContext().getSharedPreferences(name, mode)
-			SharedPreferences pref = PreferenceManager
-					.getDefaultSharedPreferences(getApplicationContext());
 
 			if (sp.equals("cpu")) {
 
 				cpuType = intent.getExtras().getString("cpu_type");
 				if (cpuType == null) {
-					cpuType = pref.getString("cpu_type", "AiAnn");
+					cpuType = "AiAnn";
 				}
 				Log.d("state", cpuType);
 				secondPlayer = getAi(cpuType);
@@ -64,14 +67,16 @@ public class GameActivity extends Activity {
 			} else {
 				secondPlayer = bw;
 			}
-			Layout layout;
+			Layout layout = null;
+			Log.d("layout", intent.getExtras().getString("layout"));
 			try {
 				layout = (Layout) Class.forName(
-						pref.getString("layout",
-								"com.bytopia.abalone.mechanics.ClassicLayout"))
-						.newInstance();
+						intent.getExtras().getString("layout")).newInstance();
+				if (layout == null) {
+					layout = new ClassicLayout();
+				}
 			} catch (Exception e) {
-				Log.d("layout", "Wrong Layout");
+				Log.d("error", "Error finding layout " + layout + ". Using ClassicLayout");
 				layout = new ClassicLayout();
 			}
 
@@ -96,7 +101,7 @@ public class GameActivity extends Activity {
 
 				game = new Game(board, side, bw, secondPlayer, bw, vsType);
 
-				int n = ois.readInt();
+				byte n = ois.readByte();
 
 				Log.d("resume", "read!!!");
 				// bw.ballSizeRecalc();
@@ -175,8 +180,8 @@ public class GameActivity extends Activity {
 			if (cpuType != null) {
 				oos.writeObject(cpuType);
 			}
-			oos.writeInt(game.getBoard().getMarblesCaptured(Side.BLACK));
-			oos.writeInt(game.getBoard().getMarblesCaptured(Side.WHITE));
+			oos.writeByte((byte)game.getBoard().getMarblesCaptured(Side.BLACK));
+			oos.writeByte((byte)game.getBoard().getMarblesCaptured(Side.WHITE));
 			oos.close();
 
 		} catch (FileNotFoundException e) {
@@ -191,8 +196,6 @@ public class GameActivity extends Activity {
 	public void ballCaptured(final byte side) {
 		Runnable runnable = new Runnable() {
 
-			private static final int DEFBALLSIZE = 34;
-
 			@Override
 			public void run() {
 				LinearLayout ll1 = (LinearLayout) findViewById(R.id.top_balls);
@@ -202,8 +205,8 @@ public class GameActivity extends Activity {
 						.setImageResource((side == Side.BLACK) ? R.drawable.black_ball
 								: R.drawable.white_ball);
 				iw.setAdjustViewBounds(true);
-				iw.setMaxHeight(DEFBALLSIZE);
-				iw.setMaxWidth(DEFBALLSIZE);
+				iw.setMaxHeight(CAPTURED_BALL_SIZE);
+				iw.setMaxWidth(CAPTURED_BALL_SIZE);
 				iw.setScaleType(ScaleType.CENTER_INSIDE);
 				if (side == Side.BLACK) {
 					ll1.addView(iw);

@@ -18,6 +18,13 @@
 			</intent-filter>
 		</activity>
 		
+		<activity android:name="GameOptionsActivity" android:label="@string/game_options_title">
+			<intent-filter>
+				<action android:name="com.bytopia.abalone.GAMEOPTIONS" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+		
 		<activity android:name="SplashAcitvity">
 			<intent-filter>
 				<category android:name= "android.intent.category.LAUNCHER"/>
@@ -46,6 +53,6 @@
 			</intent-filter>
 		</activity>
 	</application>
-	<uses-sdk android:minSdkVersion="3" />
+	<uses-sdk android:minSdkVersion="4" />
 
 </manifest> 

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project>
+  <property name="sdk-folder" value="/home/unlogic/Software/android-sdk" />
+
+  <property name="outdir" value="bin" />
+  <property name="outdir-classes" value="${outdir}/classes" />
+  <property name="android-tools" value="${sdk-folder}/tools" />
+  <property name="lib-dir" value="../../lib"/>
+  <property name="android-lib-dir" value="${lib-dir}/android"/>
+
+  <!-- No user servicable parts below. -->
+
+  <!-- Input directories -->
+  <property name="resource-dir" value="res" />
+  <property name="asset-dir" value="assets" />
+  <property name="srcdir" value="src" />
+
+  <!-- Create R.java in the source directory -->
+  <property name="outdir-r" value="src" />
+
+  <!-- Intermediate files -->
+  <property name="dex-file" value="classes.dex" />
+  <property name="intermediate-dex" value="${outdir}/${dex-file}" />
+
+  <!-- The final package file to generate -->
+  <property name="out-package" value="${outdir}/${ant.project.name}.apk" />
+
+  <!-- Tools -->
+  <property name="aapt" value="${android-tools}/aapt" />
+  <property name="aidl" value="${android-tools}/aidl" />
+  <property name="dx" value="${android-tools}/dx" />
+  <property name="zip" value="zip" />
+  <property name="android-jar" value="${sdk-folder}/android.jar" />
+
+  <!-- Rules -->
+
+  <!-- Create the output directories if they don't exist yet. -->
+  <target name="dirs">
+    <mkdir dir="${outdir}" />
+    <mkdir dir="${outdir-classes}" />
+    <mkdir dir="${android-lib-dir}"/>
+  </target>
+
+  <!-- Generate the R.java file for this project's resources. -->
+  <target name="resource-src" depends="dirs">
+    <!--echo>Generating R.java...</echo-->
+    <exec executable="${aapt}" failonerror="true">
+      <arg value="compile" />
+      <arg value="-m" />
+      <arg value="-J" />
+      <arg value="${outdir-r}" />
+      <arg value="-M" />
+      <arg value="AndroidManifest.xml" />
+      <arg value="-S" />
+      <arg value="${resource-dir}" />
+      <arg value="-I" />
+      <arg value="${android-jar}" />
+    </exec>
+  </target>
+
+  <!-- Generate java classes from .aidl files. -->
+  <target name="aidl" depends="dirs">
+    <apply executable="${aidl}" failonerror="true">
+      <fileset dir="${srcdir}">
+        <include name="**/*.aidl"/>
+      </fileset>
+    </apply>
+  </target>
+
+  <!-- Pre android stuff; -->
+  <target name="pre-android" depends="dirs, resource-src, aidl">
+  </target>
+  
+  <target name="init-post-android">
+    <copy includeemptydirs="false" todir="${outdir-classes}">
+      <fileset dir="src" excludes="**/*.launch, **/*.java"/>
+    </copy>
+  </target>
+
+  <!-- Convert this project's .class files into .dex files. -->
+  <target name="dex">
+    <exec executable="${dx}" failonerror="true">
+      <arg value="-JXmx384M" />
+      <arg value="--dex" />
+      <arg value="--output=${intermediate-dex}" />
+      <arg value="--locals=full" />
+      <arg value="--positions=lines" />
+      <arg path="${outdir-classes}" />
+    </exec>
+  </target>
+
+  <!-- Put the project's resources into the output package file. -->
+  <target name="package-res-and-assets">
+    <!--echo>Packaging resources and assets...</echo-->
+    <exec executable="${aapt}" failonerror="true">
+      <arg value="package" />
+      <arg value="-f" />
+      <arg value="-c" />
+      <arg value="-M" />
+      <arg value="AndroidManifest.xml" />
+      <arg value="-S" />
+      <arg value="${resource-dir}" />
+      <arg value="-A" />
+      <arg value="${asset-dir}" />
+      <arg value="-I" />
+      <arg value="${android-jar}" />
+      <arg value="${out-package}" />
+    </exec>
+  </target>
+
+  <!-- Same as package-res-and-assets, but without "-A ${asset-dir}" -->
+  <target name="package-res-no-assets">
+    <!--echo>Packaging resources...</echo-->
+    <exec executable="${aapt}" failonerror="true">
+      <arg value="package" />
+      <arg value="-f" />
+      <arg value="-c" />
+      <arg value="-M" />
+      <arg value="AndroidManifest.xml" />
+      <arg value="-S" />
+      <arg value="${resource-dir}" />
+      <!-- No assets directory -->
+      <arg value="-I" />
+      <arg value="${android-jar}" />
+      <arg value="${out-package}" />
+    </exec>
+  </target>
+
+  <!-- Invoke the proper target depending on whether or not
+       an assets directory is present. -->
+  <!-- TODO: find a nicer way to include the "-A ${asset-dir}" argument
+       only when the assets dir exists. -->
+  <target name="package-res">
+    <available file="${asset-dir}" type="dir"
+               property="res-target" value="and-assets" />
+    <property name="res-target" value="no-assets" />
+    <antcall target="package-res-${res-target}" />
+  </target>
+
+  <!-- Put the project's .class files into the output package file. -->
+  <target name="package-java" depends="package-res">
+    <!--echo>Packaging java...</echo-->
+    <jar destfile="${out-package}"
+         basedir="${outdir-classes}"
+         update="true" />
+  </target>
+
+  <!-- Put the project's .dex files into the output package file. -->
+  <target name="package-dex" depends="dex, package-res">
+    <!--echo>Packaging dex...</echo-->
+    <exec executable="${zip}" failonerror="true">
+      <arg value="-qj" />
+      <arg value="${out-package}" />
+      <arg value="${intermediate-dex}" />
+    </exec>
+  </target>
+
+  <!-- Post android stuff; Create the package file for this project from the sources. -->
+  <target name="post-android" depends="init-post-android,package-dex" />
+
+</project>
