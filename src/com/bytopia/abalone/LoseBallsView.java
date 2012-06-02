@@ -1,3 +1,7 @@
+/**
+* Copyright (c) 2010-2011 Yaroslav Geryatovich, Alexander Yakushev
+* Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+*/
 package com.bytopia.abalone;
 
 import android.content.Context;
